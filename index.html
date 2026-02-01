@@ -10,7 +10,6 @@
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         .yt-hover:hover { color: #FF0000; transition: color 0.3s ease; }
-        /* Offset for anchor links so they don't hide behind the sticky nav */
         section { scroll-margin-top: 100px; }
     </style>
 </head>
@@ -52,9 +51,9 @@
         </div>
     </header>
 
-    <section id="youtube" class="bg-stone-900 text-white py-24 px-6 overflow-hidden relative">
+    <section id="youtube" class="bg-stone-900 text-white py-24 px-6">
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="space-y-8 z-10">
+            <div class="space-y-8">
                 <h2 class="text-4xl md:text-5xl">Performances & Pedagogy</h2>
                 <p class="text-stone-400 text-lg leading-relaxed">
                     Music is a living art. I invite you to explore my YouTube channel to hear my performances, student showcases, and insights into the Royal Conservatory of Music repertoire.
@@ -66,13 +65,10 @@
                     </a>
                 </div>
             </div>
-            <div class="relative group cursor-pointer">
-                <div class="aspect-video bg-stone-800 border border-stone-700 shadow-2xl flex items-center justify-center relative">
-                    <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform">
-                        <div class="w-0 h-0 border-t-[10px] border-t-transparent border-l-[20px] border-l-white border-b-[10px] border-b-transparent ml-2"></div>
-                    </div>
+            <div class="aspect-video bg-stone-800 border border-stone-700 shadow-2xl flex items-center justify-center relative group cursor-pointer">
+                <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform">
+                    <div class="w-0 h-0 border-t-[10px] border-t-transparent border-l-[20px] border-l-white border-b-[10px] border-b-transparent ml-2"></div>
                 </div>
-                <div class="absolute -bottom-6 -right-6 h-32 w-32 bg-amber-700/10 -z-0"></div>
             </div>
         </div>
     </section>
@@ -94,7 +90,33 @@
 
     <section id="policy" class="bg-stone-100 py-24">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl mb-12 text-center text-stone-900 uppercase tracking-widest">Studio Policy</h2>
+            <h2 class="text-4xl mb-16 text-center text-stone-900 uppercase tracking-widest">Studio Rates & Policy</h2>
+            
+            <div class="max-w-2xl mx-auto mb-20 bg-white shadow-sm overflow-hidden rounded-sm border border-stone-200">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-stone-50 border-b border-stone-200">
+                        <tr>
+                            <th class="py-4 px-6 text-xs font-bold uppercase tracking-widest text-stone-500">Lesson Duration</th>
+                            <th class="py-4 px-6 text-xs font-bold uppercase tracking-widest text-stone-500 text-right">Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-stone-700">
+                        <tr class="border-b border-stone-100">
+                            <td class="py-5 px-6 italic">30 Minutes <span class="text-xs block text-stone-400 font-normal mt-1 not-italic">(Pre-grade 1 or non-exam only)</span></td>
+                            <td class="py-5 px-6 text-right font-semibold">$30</td>
+                        </tr>
+                        <tr class="border-b border-stone-100">
+                            <td class="py-5 px-6 italic">45 Minutes</td>
+                            <td class="py-5 px-6 text-right font-semibold">$40</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5 px-6 italic">60 Minutes</td>
+                            <td class="py-5 px-6 text-right font-semibold">$50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="p-8 bg-white shadow-sm border-t-4 border-stone-300">
                     <h3 class="text-xl mb-4 text-stone-900 uppercase tracking-wider">Practice</h3>
@@ -128,4 +150,9 @@
         </div>
     </section>
 
-    <footer class="py-12 text-center text-xs
+    <footer class="py-12 text-center text-xs text-stone-500 uppercase tracking-[0.3em] bg-stone-100">
+        &copy; 2026 Moss Music • Bedford, Nova Scotia
+    </footer>
+
+</body>
+</html>
