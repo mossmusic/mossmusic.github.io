@@ -188,7 +188,8 @@
                 </div>
                 <div class="bg-stone-50 p-10 border border-stone-200">
                     <h3 class="text-lg mb-2 text-stone-900 uppercase tracking-widest font-bold" data-en="Accreditation" data-fr="Accréditation">Accreditation</h3>
-                    <p class="text-stone-600 italic text-lg">
+                    
+                    <p class="text-stone-600 italic">
                         <span data-en="Achievements in RCM examinations are recognized for high school credits. Learn more" data-fr="La réussite aux examens du RCM donne droit à des crédits au secondaire. En savoir plus">Achievements in RCM examinations are recognized for high school credits. Learn more</span>
                         <a href="https://www.rcmusic.com/learning/examinations/recognition-accomplishment/high-school-credits-canada" target="_blank" class="text-amber-800 font-bold border-b border-amber-800 hover:text-stone-900 ml-1" data-en="here." data-fr="ici.">here.</a>
                     </p>
@@ -233,12 +234,28 @@
 
     <script>
         function setLanguage(lang) {
+            // Find all elements with translation data
             const elements = document.querySelectorAll('[data-en]');
+            
             elements.forEach(el => {
-                el.innerText = el.getAttribute(`data-${lang}`);
+                // If the element has children (like the paragraph with the link inside)
+                // we look specifically for the text wrapper to change, leaving the link alone.
+                const subSpan = el.querySelector('span');
+                
+                if (subSpan) {
+                    // Update only the nested span text
+                    subSpan.innerText = subSpan.getAttribute(`data-${lang}`);
+                } else if (el.tagName !== 'A' || el.innerText.includes('.') || el.innerText.includes('?')) {
+                    // Update standard text elements and links that contain full sentences
+                    el.innerText = el.getAttribute(`data-${lang}`);
+                }
             });
+
+            // Update button styles
             document.getElementById('en-btn').classList.toggle('active', lang === 'en');
             document.getElementById('fr-btn').classList.toggle('active', lang === 'fr');
+            
+            // Set HTML attribute for screen readers
             document.documentElement.lang = lang;
         }
     </script>
