@@ -33,9 +33,9 @@
                 <div class="hidden lg:flex items-center space-x-6 text-xs font-medium uppercase tracking-widest text-stone-600">
                     <a href="#about" class="hover:text-amber-700 transition" data-en="About" data-fr="À Propos">About</a>
                     <a href="#achievements" class="hover:text-amber-700 transition" data-en="Achievements" data-fr="Distinctions">Achievements</a>
-                    <!-- <a href="#youtube" class="hover:text-amber-700 transition" data-en="YouTube" data-fr="YouTube">YouTube</a> -->
                     <a href="#policy" class="hover:text-amber-700 transition" data-en="Policy" data-fr="Politiques">Policy</a>
                     <a href="#rcm" class="hover:text-amber-700 transition" data-en="RCM Info" data-fr="Infos RCM">RCM Info</a>
+                    <a href="#registration" class="hover:text-amber-700 transition" data-en="Registration Info" data-fr="Infos d'inscription">Registration Info</a>
                     <a href="#contact" class="hover:text-amber-700 transition border-l pl-6 border-stone-300 font-semibold text-stone-900" data-en="Contact" data-fr="Contact">Contact</a>
                 </div>
 
@@ -105,7 +105,6 @@
 
         <section id="achievements" class="max-w-6xl mx-auto px-6 py-12 bg-stone-50 border-b border-stone-100">
             <h2 class="text-3xl text-stone-900 text-center uppercase tracking-widest mb-10" data-en="Studio Achievements" data-fr="Distinctions du Studio">Studio Achievements</h2>
-            
             <div class="grid md:grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto mb-12">
                 <div class="p-8 border border-stone-200 bg-white shadow-sm flex items-start space-x-4">
                     <span class="text-amber-700 text-2xl font-serif">/</span>
@@ -120,7 +119,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="flex justify-center">
                 <img src="images/RCM-Certified-Teacher.png" alt="RCM Certified Teacher" class="max-w-[200px] h-auto grayscale hover:grayscale-0 transition-all duration-500">
             </div>
@@ -208,27 +206,29 @@
             </div>
         </section>
 
-        <section id="contact" class="bg-stone-200 py-16 text-center border-t border-stone-300">
+        <section id="registration" class="bg-stone-200 py-16 text-center border-t border-stone-300">
             <div class="max-w-4xl mx-auto px-6 space-y-6">
-                <h2 class="text-4xl text-stone-900 italic font-medium" data-en="Registration Update" data-fr="Inscriptions">Registration Update</h2>
+                <h2 class="text-4xl text-stone-900 italic font-medium" data-en="Registration Info" data-fr="Infos d'inscription">Registration Info</h2>
                 <div class="h-px w-24 bg-amber-700 mx-auto"></div>
                 <p class="text-stone-700 text-xl leading-relaxed max-w-2xl mx-auto italic" 
                    data-en="The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests." 
                    data-fr="Le Studio est complet pour l'année 2025-2026 et n'accepte aucune nouvelle demande.">
                     The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests.
                 </p>
-                
-                <div class="pt-8 space-y-6">
+            </div>
+        </section>
+
+        <section id="contact" class="bg-stone-100 py-16 text-center border-t border-stone-300">
+            <div class="max-w-4xl mx-auto px-6 space-y-6">
+                <div class="pt-4 space-y-6">
                     <div class="space-y-1">
                         <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-500" data-en="Professional Inquiries Only" data-fr="Demandes professionnelles seulement">Professional Inquiries Only</p>
                         <a href="mailto:jennifer@mossmusic.ca" class="text-2xl text-stone-900 hover:text-amber-700 transition border-b border-stone-400 pb-1 inline-block">jennifer@mossmusic.ca</a>
                     </div>
-
                     <div class="space-y-1">
                         <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-500" data-en="Phone" data-fr="Téléphone">Phone</p>
                         <a href="tel:9024109278" class="text-xl text-stone-800 hover:text-amber-700 transition">(902) 410-9278</a>
                     </div>
-                    
                     <div class="space-y-1">
                         <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-500" data-en="Location" data-fr="Emplacement">Location</p>
                         <p class="text-lg text-stone-800">Bedford, Nova Scotia</p>
@@ -246,35 +246,22 @@
     <script>
         function setLanguage(lang) {
             const elements = document.querySelectorAll('[data-en]');
-            
             elements.forEach(el => {
-                // Handle translation within elements that might contain nested spans (links protection)
-                const subSpans = el.querySelectorAll('span');
-                
-                if (subSpans.length > 0) {
-                    subSpans.forEach(span => {
-                        if (span.hasAttribute(`data-${lang}`)) {
-                            span.innerText = span.getAttribute(`data-${lang}`);
-                        }
-                    });
+                const subSpan = el.querySelector('span');
+                if (subSpan) {
+                    subSpan.innerText = subSpan.getAttribute(`data-${lang}`);
                 } 
-                
-                // standard translation for text-only elements
                 if (el.hasAttribute(`data-${lang}`) && el.children.length === 0) {
                     el.innerText = el.getAttribute(`data-${lang}`);
                 }
-
-                // specifically handle links with data attributes
                 if (el.tagName === 'A' && el.hasAttribute(`data-${lang}`)) {
                      el.innerText = el.getAttribute(`data-${lang}`);
                 }
             });
-
             document.getElementById('en-btn').classList.toggle('active', lang === 'en');
             document.getElementById('fr-btn').classList.toggle('active', lang === 'fr');
             document.documentElement.lang = lang;
         }
     </script>
-
 </body>
 </html>
