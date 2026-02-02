@@ -68,7 +68,7 @@
             </div>
             <div class="relative">
                 <div class="aspect-[4/5] bg-stone-200 shadow-2xl overflow-hidden rounded-sm">
-                    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80" alt="Piano" class="w-full h-full object-cover opacity-90">
+                    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80" alt="Piano keys close-up" class="w-full h-full object-cover opacity-90">
                 </div>
             </div>
         </header>
@@ -86,7 +86,7 @@
                     </a>
                 </div>
                 <div class="relative overflow-hidden rounded-sm shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80" alt="Recital" class="w-full h-full object-cover grayscale opacity-80">
+                    <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80" alt="Recital performance" class="w-full h-full object-cover grayscale opacity-80">
                 </div>
             </div>
         </section>
@@ -131,15 +131,15 @@
                         <tbody class="text-stone-700 font-medium">
                             <tr class="border-b border-stone-100">
                                 <td class="py-5 px-6 italic" data-en="30 Minutes (Pre-grade 1 only)" data-fr="30 Minutes (Niveaux préparatoires uniquement)">30 Minutes (Pre-grade 1 only)</td>
-                                <td class="py-5 px-6 text-right">$30</td>
+                                <td class="py-5 px-6 text-right font-semibold">$30</td>
                             </tr>
                             <tr class="border-b border-stone-100">
                                 <td class="py-5 px-6 italic" data-en="45 Minutes" data-fr="45 Minutes">45 Minutes</td>
-                                <td class="py-5 px-6 text-right">$40</td>
+                                <td class="py-5 px-6 text-right font-semibold">$40</td>
                             </tr>
                             <tr>
                                 <td class="py-5 px-6 italic" data-en="60 Minutes" data-fr="60 Minutes">60 Minutes</td>
-                                <td class="py-5 px-6 text-right">$50</td>
+                                <td class="py-5 px-6 text-right font-semibold">$50</td>
                             </tr>
                         </tbody>
                     </table>
@@ -179,8 +179,10 @@
             <div class="max-w-4xl mx-auto px-6 space-y-8">
                 <h2 class="text-4xl text-stone-900 italic font-medium" data-en="Registration Update" data-fr="Mise à Jour des Inscriptions">Registration Update</h2>
                 <div class="h-px w-24 bg-amber-700 mx-auto"></div>
-                <p class="text-stone-700 text-xl leading-relaxed max-w-2xl mx-auto italic" data-en="The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests." data-fr="Le Studio affiche actuellement complet pour l'année scolaire 2025-2026 et n'accepte ni nouveaux élèves ni demandes d'inscription sur liste d'attente..">
-                    Currently at full capacity for 2025–2026. Not accepting new students or waiting list requests.
+                <p class="text-stone-700 text-xl leading-relaxed max-w-2xl mx-auto italic" 
+                   data-en="The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests." 
+                   data-fr="Le Studio affiche actuellement complet pour l'année scolaire 2025-2026 et n'accepte ni nouveaux élèves ni demandes d'inscription sur liste d'attente.">
+                    The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests.
                 </p>
                 <div class="pt-12 space-y-4">
                     <p class="text-xs font-bold uppercase tracking-[0.3em] text-stone-400" data-en="Professional Inquiries Only" data-fr="Demandes Professionnelles Uniquement">Professional Inquiries Only</p>
@@ -197,18 +199,12 @@
 
     <script>
         function setLanguage(lang) {
-            // Find all elements with translation attributes
             const elements = document.querySelectorAll('[data-en]');
-            
             elements.forEach(el => {
                 el.innerText = el.getAttribute(`data-${lang}`);
             });
-
-            // Update Toggle Button States
             document.getElementById('en-btn').classList.toggle('active', lang === 'en');
             document.getElementById('fr-btn').classList.toggle('active', lang === 'fr');
-
-            // Update global HTML lang attribute for accessibility
             document.documentElement.lang = lang;
         }
     </script>
