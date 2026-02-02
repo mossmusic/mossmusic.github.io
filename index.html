@@ -14,10 +14,8 @@
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         .brand-font { font-family: 'Meddon', cursive; }
-        section { scroll-margin-top: 100px; }
+        section { scroll-margin-top: 80px; } /* Adjusted for reduced padding */
         a:focus { outline: 2px solid #92400e; outline-offset: 4px; }
-        
-        /* Language Toggle Styling */
         .lang-btn.active { color: #92400e; font-weight: 700; border-bottom: 2px solid #92400e; }
     </style>
 </head>
@@ -25,20 +23,20 @@
 <body id="home" class="bg-[#FAF9F6] text-stone-800">
 
     <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-stone-200" aria-label="Main Navigation">
-        <div class="py-6 px-6 max-w-6xl mx-auto flex justify-between items-center">
+        <div class="py-4 px-6 max-w-6xl mx-auto flex justify-between items-center">
             <a href="#home" class="flex flex-col hover:opacity-80 transition-opacity">
-                <span class="text-3xl brand-font text-stone-900 leading-none">MossMusic</span>
-                <p class="text-[10px] sm:text-sm tracking-[0.2em] text-stone-600 uppercase leading-tight mt-1 font-semibold">Jennifer Moss, BSc • AVCM • ARCT</p>
+                <span class="text-2xl md:text-3xl brand-font text-stone-900 leading-none">MossMusic</span>
+                <p class="text-[10px] sm:text-xs tracking-[0.2em] text-stone-600 uppercase leading-tight mt-1 font-semibold">Jennifer Moss, BSc • AVCM • ARCT</p>
             </a>
             
             <div class="flex items-center space-x-6">
-                <div class="hidden md:flex items-center space-x-8 text-xs font-medium uppercase tracking-widest text-stone-600">
+                <div class="hidden lg:flex items-center space-x-6 text-xs font-medium uppercase tracking-widest text-stone-600">
                     <a href="#about" class="hover:text-amber-700 transition" data-en="About" data-fr="À Propos">About</a>
                     <a href="#achievements" class="hover:text-amber-700 transition" data-en="Achievements" data-fr="Distinctions">Achievements</a>
                     <a href="#youtube" class="hover:text-amber-700 transition" data-en="YouTube" data-fr="YouTube">YouTube</a>
                     <a href="#policy" class="hover:text-amber-700 transition" data-en="Policy" data-fr="Politiques">Policy</a>
                     <a href="#rcm" class="hover:text-amber-700 transition" data-en="RCM Info" data-fr="Infos RCM">RCM Info</a>
-                    <a href="#contact" class="hover:text-amber-700 transition border-l pl-8 border-stone-300 font-semibold text-stone-900" data-en="Contact" data-fr="Contact">Contact</a>
+                    <a href="#contact" class="hover:text-amber-700 transition border-l pl-6 border-stone-300 font-semibold text-stone-900" data-en="Contact" data-fr="Contact">Contact</a>
                 </div>
 
                 <div class="flex items-center space-x-2 border-l pl-6 border-stone-300 text-xs font-bold uppercase tracking-tighter">
@@ -51,31 +49,31 @@
     </nav>
 
     <main>
-        <header class="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
+        <header class="max-w-6xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-12 items-center">
             <div class="space-y-6">
                 <div class="inline-block px-4 py-1 bg-stone-200 text-stone-700 text-xs font-bold uppercase tracking-widest" data-en="Teacher of Distinction, Atlantic Region, Canada" data-fr="Professeure de Distinction, Région de l'Atlantique, Canada">
                     Teacher of Distinction, Atlantic Region, Canada
                 </div>
-                <h1 class="text-5xl md:text-7xl leading-tight text-stone-900" data-en="Developing Musical Excellence." data-fr="Développer l'Excellence Musicale.">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl leading-tight text-stone-900" data-en="Developing Musical Excellence." data-fr="Développer l'Excellence Musicale.">
                     Developing Musical Excellence.
                 </h1>
                 <p class="text-lg text-stone-600 leading-relaxed max-w-lg" data-en="With 30 years of experience, Jennifer Moss provides tailored piano, flute and theory instruction that balances technical discipline with the joy of discovery." data-fr="Avec 30 ans d'expérience, Jennifer Moss offre un enseignement personnalisé du piano, de la flûte et de la théorie, alliant discipline technique et plaisir de la découverte.">
                     With 30 years of experience, Jennifer Moss provides tailored piano, flute and theory instruction that balances technical discipline with the joy of discovery.
                 </p>
-                <div class="flex items-center space-x-4 pt-4">
+                <div class="flex items-center space-x-4 pt-2">
                     <span class="h-px w-12 bg-amber-700" aria-hidden="true"></span>
                     <p class="text-sm font-bold text-amber-800 uppercase tracking-widest" data-en="Studio Status: Currently Full" data-fr="Statut du Studio : Complet">Studio Status: Currently Full</p>
                 </div>
             </div>
             <div class="relative">
-                <div class="aspect-[4/5] bg-stone-200 shadow-2xl overflow-hidden rounded-sm">
-                    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80" alt="Piano keys close-up" class="w-full h-full object-cover opacity-90">
+                <div class="aspect-[4/5] bg-stone-200 shadow-xl overflow-hidden rounded-sm">
+                    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80" alt="Piano Keys" class="w-full h-full object-cover opacity-90">
                 </div>
             </div>
         </header>
 
-        <section id="about" class="max-w-6xl mx-auto px-6 py-24 border-t border-stone-100">
-            <div class="grid md:grid-cols-3 gap-12 border-b border-stone-100 pb-20">
+        <section id="about" class="max-w-6xl mx-auto px-6 py-16 border-t border-stone-100">
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12">
                 <div class="col-span-1 space-y-4">
                     <h2 class="text-4xl text-stone-900 leading-tight font-serif italic" data-en="The Studio Philosophy" data-fr="La Philosophie du Studio">The Studio Philosophy</h2>
                     <p class="text-sm font-bold text-amber-800 uppercase tracking-[0.2em]" data-en="Classical • Contemporary" data-fr="Classique • Contemporain">Classical • Contemporary</p>
@@ -87,8 +85,7 @@
                     <p data-en="Whether preparing for RCM examinations or learning for enrichment, each lesson is tailored to the student. Being recognized and winning the Teacher of Distinction award for the Atlantic Provinces (2023) reflects my commitment to excellence." data-fr="Qu'il s'agisse de se préparer aux examens du RCM ou d'apprendre pour le plaisir, chaque leçon est adaptée à l'élève. Le fait d'avoir été reconnue et d'avoir remporté le prix d'excellence à l'enseignement pour les provinces de l'Atlantique (2023) reflète mon engagement envers l'excellence.">
                         Whether preparing for RCM examinations or learning for enrichment, each lesson is tailored to the student. Being recognized and winning the Teacher of Distinction award for the Atlantic Provinces (2023) reflects my commitment to excellence.
                     </p>
-                    
-                    <div class="pt-8 border-t border-stone-200 mt-8">
+                    <div class="pt-6 border-t border-stone-200 mt-6">
                         <div class="text-sm font-bold uppercase tracking-widest leading-relaxed text-stone-600">
                             <p>BSc • AVCM (Teacher) • ARCT (Performer)</p>
                             <p class="whitespace-nowrap">RCM Advanced Specialist (Piano & Theory)</p>
@@ -99,136 +96,125 @@
             </div>
         </section>
 
-        <section id="achievements" class="max-w-6xl mx-auto px-6 py-24 bg-stone-50 border-b border-stone-100">
-            <div class="max-w-4xl mx-auto space-y-12">
-                <h2 class="text-4xl text-stone-900 text-center uppercase tracking-widest" data-en="Studio Achievements" data-fr="Distinctions du Studio">Studio Achievements</h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="p-8 border border-stone-200 bg-white shadow-sm flex items-start space-x-4">
-                        <span class="text-amber-700 text-2xl font-serif">/</span>
-                        <p class="text-stone-700 leading-relaxed italic" data-en="Gold Medal and Medal of Excellence teacher with both The Royal Conservatory (RCM) and Conservatory Canada" data-fr="Enseignante médaillée d'or et récipiendaire de la médaille d'excellence du Royal Conservatory (RCM) et de Conservatory Canada">
-                            Gold Medal and Medal of Excellence teacher with both The Royal Conservatory (RCM) and Conservatory Canada
-                        </p>
-                    </div>
-                    <div class="p-8 border border-stone-200 bg-white shadow-sm flex items-start space-x-4">
-                        <span class="text-amber-700 text-2xl font-serif">/</span>
-                        <p class="text-stone-700 leading-relaxed italic" data-en="2023 Teacher of Distinction by The Royal Conservatory (RCM)" data-fr="Professeure de Distinction 2023 par le Royal Conservatory (RCM)">
-                            2023 Teacher of Distinction by The Royal Conservatory (RCM)
-                        </p>
-                    </div>
+        <section id="achievements" class="max-w-6xl mx-auto px-6 py-16 bg-stone-50 border-y border-stone-100">
+            <h2 class="text-3xl text-stone-900 text-center uppercase tracking-widest mb-10" data-en="Studio Achievements" data-fr="Distinctions du Studio">Studio Achievements</h2>
+            <div class="grid md:grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto">
+                <div class="p-8 border border-stone-200 bg-white shadow-sm flex items-start space-x-4">
+                    <span class="text-amber-700 text-2xl font-serif">/</span>
+                    <p class="text-stone-700 leading-relaxed italic" data-en="Gold Medal and Medal of Excellence teacher with both The Royal Conservatory (RCM) and Conservatory Canada" data-fr="Enseignante médaillée d'or et récipiendaire de la médaille d'excellence du Royal Conservatory (RCM) et de Conservatory Canada">
+                        Gold Medal and Medal of Excellence teacher with both The Royal Conservatory (RCM) and Conservatory Canada
+                    </p>
+                </div>
+                <div class="p-8 border border-stone-200 bg-white shadow-sm flex items-start space-x-4">
+                    <span class="text-amber-700 text-2xl font-serif">/</span>
+                    <p class="text-stone-700 leading-relaxed italic" data-en="2023 Teacher of Distinction by The Royal Conservatory (RCM)" data-fr="Professeure de Distinction 2023 par le Royal Conservatory (RCM)">
+                        2023 Teacher of Distinction by The Royal Conservatory (RCM)
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section id="youtube" class="bg-stone-900 text-white py-28 px-6 overflow-hidden">
-            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-                <div class="space-y-8">
+        <section id="youtube" class="bg-stone-900 text-white py-20 px-6 overflow-hidden">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
                     <h2 class="text-4xl md:text-5xl font-serif" data-en="Performances & Pedagogy" data-fr="Performances et Pédagogie">Performances & Pedagogy</h2>
                     <p class="text-stone-400 text-lg leading-relaxed" data-en="Music is a living art. Explore my YouTube channel to hear performances showcases and insights into the RCM repertoire." data-fr="La musique est un art vivant. Explorez ma chaîne YouTube pour découvrir des performances et des conseils sur le répertoire du RCM.">
                         Music is a living art. Explore my YouTube channel to hear performances showcases and insights into the RCM repertoire.
                     </p>
-                    <a href="https://www.youtube.com/user/JMMossMusic" target="_blank" class="inline-flex items-center space-x-4 px-8 py-4 bg-red-700 hover:bg-red-600 transition-all font-bold uppercase tracking-widest text-sm text-white rounded-sm">
-                        <span data-en="Visit MossMusic's YouTube Channel" data-fr="Visitez la chaîne YouTube MossMusic">Visit MossMusic's YouTube Channel</span>
+                    <a href="https://www.youtube.com/user/JMMossMusic" target="_blank" class="inline-flex items-center space-x-4 px-8 py-3 bg-red-700 hover:bg-red-600 transition-all font-bold uppercase tracking-widest text-sm text-white rounded-sm">
+                        <span data-en="Visit MossMusic's YouTube Channel" data-fr="Chaîne YouTube MossMusic">Visit MossMusic's YouTube Channel</span>
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                     </a>
                 </div>
-                <div class="relative overflow-hidden rounded-sm shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80" alt="Recital performance" class="w-full h-full object-cover grayscale opacity-80">
+                <div class="relative overflow-hidden rounded-sm shadow-2xl aspect-video">
+                    <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80" alt="Recital" class="w-full h-full object-cover grayscale opacity-80">
                 </div>
             </div>
         </section>
 
-        <section id="policy" class="bg-stone-200 py-24 border-y border-stone-300">
+        <section id="policy" class="bg-stone-200 py-16 border-y border-stone-300">
             <div class="max-w-6xl mx-auto px-6">
-                <h2 class="text-4xl mb-16 text-center text-stone-900 uppercase tracking-widest" data-en="Studio Rates & Policy" data-fr="Tarifs et Politiques">Studio Rates & Policy</h2>
+                <h2 class="text-4xl mb-12 text-center text-stone-900 uppercase tracking-widest" data-en="Studio Rates & Policy" data-fr="Tarifs et Politiques">Studio Rates & Policy</h2>
                 
-                <div class="max-w-2xl mx-auto mb-20 bg-white shadow-sm border border-stone-200">
+                <div class="max-w-2xl mx-auto mb-16 bg-white shadow-sm border border-stone-200">
                     <table class="w-full text-left border-collapse">
-                        <thead class="bg-stone-50 border-b border-stone-200 text-stone-600">
-                            <tr>
+                        <thead class="bg-stone-50 border-b border-stone-200">
+                            <tr class="text-stone-600">
                                 <th class="py-4 px-6 text-xs font-bold uppercase tracking-widest" data-en="Duration" data-fr="Durée">Duration</th>
                                 <th class="py-4 px-6 text-xs font-bold uppercase tracking-widest text-right" data-en="Rate" data-fr="Tarif">Rate</th>
                             </tr>
                         </thead>
                         <tbody class="text-stone-700 font-medium">
-                            <tr class="border-b border-stone-100">
-                                <td class="py-5 px-6 italic" data-en="30 Minutes (Pre-grade 1 only)" data-fr="30 Minutes (Niveaux préparatoires uniquement)">30 Minutes (Pre-grade 1 only)</td>
-                                <td class="py-5 px-6 text-right font-semibold">$30</td>
-                            </tr>
-                            <tr class="border-b border-stone-100">
-                                <td class="py-5 px-6 italic" data-en="45 Minutes" data-fr="45 Minutes">45 Minutes</td>
-                                <td class="py-5 px-6 text-right font-semibold">$40</td>
-                            </tr>
-                            <tr>
-                                <td class="py-5 px-6 italic" data-en="60 Minutes" data-fr="60 Minutes">60 Minutes</td>
-                                <td class="py-5 px-6 text-right font-semibold">$50</td>
-                            </tr>
+                            <tr class="border-b border-stone-100"><td class="py-5 px-6 italic" data-en="30 Minutes (Pre-grade 1 only)" data-fr="30 Minutes (Pré-niveau 1)">30 Minutes (Pre-grade 1 only)</td><td class="py-5 px-6 text-right font-semibold">$30</td></tr>
+                            <tr class="border-b border-stone-100"><td class="py-5 px-6 italic" data-en="45 Minutes" data-fr="45 Minutes">45 Minutes</td><td class="py-5 px-6 text-right font-semibold">$40</td></tr>
+                            <tr><td class="py-5 px-6 italic" data-en="60 Minutes" data-fr="60 Minutes">60 Minutes</td><td class="py-5 px-6 text-right font-semibold">$50</td></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 items-stretch">
-                    <div class="p-10 bg-white shadow-md border-t-8 border-amber-700 md:col-span-1 flex flex-col justify-center">
-                        <h3 class="text-2xl mb-6 text-stone-900 uppercase tracking-widest font-bold" data-en="Practice" data-fr="Pratique">Practice</h3>
-                        <p class="text-2xl text-stone-700 italic leading-snug" data-en="Daily practice is essential for progress. Theory should be completed prior to each lesson." data-fr="La pratique quotidienne est essentielle au progrès. La théorie doit être complétée avant chaque leçon.">
+                <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+                    <div class="p-8 bg-white shadow-md border-t-8 border-amber-700 md:col-span-1 flex flex-col justify-center">
+                        <h3 class="text-xl mb-4 text-stone-900 uppercase tracking-widest font-bold" data-en="Practice" data-fr="Pratique">Practice</h3>
+                        <p class="text-xl text-stone-700 italic leading-snug" data-en="Daily practice is essential for progress. Theory should be completed prior to each lesson." data-fr="La pratique quotidienne est essentielle. La théorie doit être complétée avant chaque leçon.">
                             Daily practice is essential for progress. Theory should be completed prior to each lesson.
                         </p>
                     </div>
 
-                    <div class="p-10 bg-[#FAF9F6] shadow-sm border border-stone-300 md:col-span-2">
-                        <h3 class="text-xl mb-6 text-stone-900 uppercase tracking-widest font-bold border-b border-stone-200 pb-4" data-en="Studio Policy Details" data-fr="Détails des Politiques">Studio Policy Details</h3>
-                        <ul class="space-y-5 text-sm md:text-base text-stone-700 leading-relaxed list-disc pl-5">
-                            <li data-en="Parental involvement in the progress of students is encouraged. Students should devote a minimum of 15 mins/day to practice; theory must be completed before the lesson." data-fr="L'implication des parents est encouragée. Les élèves doivent consacrer au moins 15 min/jour à la pratique; la théorie doit être faite avant le cours.">Parental involvement in the progress of students is encouraged. Students should devote a minimum of 15 mins/day to practice; theory must be completed before the lesson.</li>
-                            <li data-en="Lessons must be paid at the beginning of each month by Interac e-Transfer." data-fr="Les cours doivent être payés au début de chaque mois par virement Interac.">Lessons must be paid at the beginning of each month by Interac e-Transfer.</li>
-                            <li data-en="No make-ups for missed lessons. Credit applied to the following month for lessons missed by the teacher." data-fr="Aucun cours de rattrapage. Un crédit sera appliqué le mois suivant pour tout cours manqué par l'enseignante.">No make-ups for missed lessons. Credit applied to the following month for lessons missed by the teacher.</li>
-                            <li data-en="If ill, students should not attend in person. Credit will be added to fees for lessons missed due to illness." data-fr="En cas de maladie, l'élève ne doit pas se présenter. Un crédit sera ajouté pour les cours manqués pour cause de maladie.">If ill, students should not attend in person. Credit will be added to fees for lessons missed due to illness.</li>
-                            <li data-en="Time lost due to student lateness cannot be made up." data-fr="Le temps perdu en raison d'un retard de l'élève ne pourra pas être rattrapé.">Time lost due to student lateness cannot be made up.</li>
-                            <li data-en="Students must not enter exams, performances, or auditions without teacher approval." data-fr="Les élèves ne doivent pas s'inscrire à des examens ou auditions sans l'accord préalable de l'enseignante.">Students must not enter exams, performances, or auditions without teacher approval.</li>
-                            <li data-en="The teacher will provide a safe, supportive, and positive learning environment." data-fr="L'enseignante s'engage à fournir un environnement d'apprentissage sécuritaire et positif.">The teacher will provide a safe, supportive, and positive learning environment.</li>
+                    <div class="p-8 bg-[#FAF9F6] shadow-sm border border-stone-300 md:col-span-2">
+                        <h3 class="text-lg mb-4 text-stone-900 uppercase tracking-widest font-bold border-b border-stone-200 pb-2" data-en="Studio Policy Details" data-fr="Détails des Politiques">Studio Policy Details</h3>
+                        <ul class="space-y-4 text-sm md:text-base text-stone-700 leading-relaxed list-disc pl-5">
+                            <li data-en="Parental involvement in the progress of students is encouraged. Students should devote a minimum of 15 mins/day to practice; theory must be completed before the lesson." data-fr="L'implication parentale est encouragée. Les élèves doivent pratiquer au moins 15 min/jour; la théorie doit être faite avant le cours.">Parental involvement in the progress of students is encouraged. Students should devote a minimum of 15 mins/day to practice; theory must be completed before the lesson.</li>
+                            <li data-en="Lessons must be paid at the beginning of each month by Interac e-Transfer." data-fr="Les cours sont payables au début de chaque mois par virement Interac.">Lessons must be paid at the beginning of each month by Interac e-Transfer.</li>
+                            <li data-en="No make-ups for missed lessons. Credit applied to the following month for lessons missed by the teacher." data-fr="Aucun cours de rattrapage. Crédit appliqué le mois suivant si l'enseignante manque un cours.">No make-ups for missed lessons. Credit applied to the following month for lessons missed by the teacher.</li>
+                            <li data-en="If ill, students should not attend in person. Credit will be added to fees for lessons missed due to illness." data-fr="En cas de maladie, ne pas venir en personne. Un crédit sera accordé pour les leçons manquées.">If ill, students should not attend in person. Credit will be added to fees for lessons missed due to illness.</li>
+                            <li data-en="Time lost due to student lateness cannot be made up." data-fr="Le temps perdu en raison d'un retard ne sera pas rattrapé.">Time lost due to student lateness cannot be made up.</li>
+                            <li data-en="Students must not enter exams or performances without teacher approval." data-fr="Pas d'examens ou de prestations sans l'accord de l'enseignante.">Students must not enter exams or performances without teacher approval.</li>
+                            <li data-en="The teacher will provide a safe, supportive, and positive learning environment." data-fr="L'enseignante offre un milieu d'apprentissage sûr et positif.">The teacher will provide a safe, supportive, and positive learning environment.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="rcm" class="py-24 bg-white border-b border-stone-200">
-            <div class="max-w-4xl mx-auto px-6 space-y-16 text-center">
+        <section id="rcm" class="py-16 bg-white border-b border-stone-200">
+            <div class="max-w-4xl mx-auto px-6 space-y-12 text-center">
                 <div>
-                    <h2 class="text-4xl text-stone-900 font-serif italic font-medium" data-en="RCM Examination Info" data-fr="Infos sur les Examens du RCM">RCM Examination Info</h2>
-                    <div class="h-px w-20 bg-amber-700 mx-auto mt-8 mb-8" aria-hidden="true"></div>
-                    <p class="text-stone-500 max-w-xl mx-auto text-lg leading-relaxed italic mb-8" data-en="Visit the official Royal Conservatory portal for registration and syllabus details." data-fr="Visitez le portail officiel du Royal Conservatory pour l'inscription et les détails du programme.">Visit the official Royal Conservatory portal for registration and syllabus details.</p>
-                    <a href="https://examinations.rcmusic.ca/" target="_blank" class="inline-block border-2 border-stone-800 px-10 py-4 text-stone-900 font-bold uppercase tracking-widest text-xs hover:bg-stone-900 hover:text-white transition-all">
-                        <span data-en="Visit RCM Website &rarr;" data-fr="Visiter le Site du RCM &rarr;">Visit RCM Website &rarr;</span>
+                    <h2 class="text-4xl text-stone-900 font-serif italic font-medium" data-en="RCM Examination Info" data-fr="Infos Examens RCM">RCM Examination Info</h2>
+                    <div class="h-px w-20 bg-amber-700 mx-auto mt-6 mb-6" aria-hidden="true"></div>
+                    <p class="text-stone-500 max-w-xl mx-auto text-lg leading-relaxed italic mb-6" data-en="Visit the official Royal Conservatory portal for registration and syllabus details." data-fr="Visitez le portail officiel du RCM pour l'inscription et le programme.">Visit the official Royal Conservatory portal for registration and syllabus details.</p>
+                    <a href="https://examinations.rcmusic.ca/" target="_blank" class="inline-block border-2 border-stone-800 px-10 py-3 text-stone-900 font-bold uppercase tracking-widest text-xs hover:bg-stone-900 hover:text-white transition-all">
+                        <span data-en="Visit RCM Website &rarr;" data-fr="Site Web du RCM &rarr;">Visit RCM Website &rarr;</span>
                     </a>
                 </div>
-                <div class="bg-stone-50 p-12 border border-stone-200">
-                    <h3 class="text-xl mb-4 text-stone-900 uppercase tracking-widest font-bold" data-en="Accreditation" data-fr="Accréditation">Accreditation</h3>
-                    <p class="text-stone-600 italic text-lg">
-                        <span data-en="Achievements in RCM examinations are recognized for high school credits. Learn more" data-fr="La réussite aux examens du RCM est reconnue pour l'obtention de crédits au secondaire. En savoir plus">Achievements in RCM examinations are recognized for high school credits. Learn more</span>
+                <div class="bg-stone-50 p-10 border border-stone-200">
+                    <h3 class="text-lg mb-2 text-stone-900 uppercase tracking-widest font-bold" data-en="Accreditation" data-fr="Accréditation">Accreditation</h3>
+                    <p class="text-stone-600 italic">
+                        <span data-en="Achievements in RCM examinations are recognized for high school credits. Learn more" data-fr="La réussite aux examens du RCM donne droit à des crédits au secondaire. En savoir plus">Achievements in RCM examinations are recognized for high school credits. Learn more</span>
                         <a href="https://www.rcmusic.com/learning/examinations/recognition-accomplishment/high-school-credits-canada" target="_blank" class="text-amber-800 font-bold border-b border-amber-800 hover:text-stone-900 ml-1" data-en="here." data-fr="ici.">here.</a>
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="bg-stone-200 py-28 text-center border-t border-stone-300">
-            <div class="max-w-4xl mx-auto px-6 space-y-8">
-                <h2 class="text-4xl text-stone-900 italic font-medium" data-en="Registration Update" data-fr="Mise à Jour">Registration Update</h2>
+        <section id="contact" class="bg-stone-200 py-20 text-center border-t border-stone-300">
+            <div class="max-w-4xl mx-auto px-6 space-y-6">
+                <h2 class="text-4xl text-stone-900 italic font-medium" data-en="Registration Update" data-fr="Inscriptions">Registration Update</h2>
                 <div class="h-px w-24 bg-amber-700 mx-auto"></div>
                 <p class="text-stone-700 text-xl leading-relaxed max-w-2xl mx-auto italic" 
                    data-en="The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests." 
-                   data-fr="Le Studio affiche actuellement complet pour l'année scolaire 2025-2026 et n'accepte ni nouveaux élèves ni demandes d'inscription sur liste d'attente.">
+                   data-fr="Le Studio est complet pour l'année 2025-2026 et n'accepte aucune nouvelle demande.">
                     The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests.
                 </p>
-                <div class="pt-12 space-y-4">
-                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-stone-500" data-en="Professional Inquiries Only" data-fr="Demandes Professionnelles Uniquement">Professional Inquiries Only</p>
-                    <a href="mailto:jennifer@mossmusic.ca" class="text-2xl text-stone-900 hover:text-amber-700 transition border-b border-stone-400 pb-2">jennifer@mossmusic.ca</a>
+                <div class="pt-8 space-y-2">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-stone-500" data-en="Professional Inquiries Only" data-fr="Demandes professionnelles seulement">Professional Inquiries Only</p>
+                    <a href="mailto:jennifer@mossmusic.ca" class="text-2xl text-stone-900 hover:text-amber-700 transition border-b border-stone-400 pb-1">jennifer@mossmusic.ca</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="py-12 text-center bg-stone-300 border-t border-stone-400">
-        <span class="text-4xl brand-font text-stone-900 block mb-2 leading-none">MossMusic</span>
+    <footer class="py-10 text-center bg-stone-300 border-t border-stone-400">
+        <span class="text-3xl brand-font text-stone-900 block mb-2">MossMusic</span>
         <p class="text-xs text-stone-600 uppercase tracking-[0.3em]">&copy; 2026 • Bedford, Nova Scotia</p>
     </footer>
 
