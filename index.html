@@ -15,19 +15,21 @@
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         .brand-font { font-family: 'Meddon', cursive; }
         section { scroll-margin-top: 100px; }
+        /* Focus state for keyboard accessibility */
         a:focus { outline: 2px solid #92400e; outline-offset: 4px; }
     </style>
 </head>
 
-<body class="bg-[#FAF9F6] text-stone-800">
+<body id="home" class="bg-[#FAF9F6] text-stone-800">
 
-    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-stone-200" aria-label="Main">
+    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-stone-200" aria-label="Main Navigation">
         <div class="py-6 px-6 max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex flex-col">
+            <a href="#home" class="flex flex-col hover:opacity-80 transition-opacity">
                 <span class="text-3xl brand-font text-stone-900 leading-none">MossMusic</span>
                 <p class="text-[10px] sm:text-sm tracking-[0.2em] text-stone-600 uppercase leading-tight mt-1 font-semibold">Jennifer Moss, BSc • AVCM • ARCT</p>
-            </div>
+            </a>
             <div class="hidden md:flex items-center space-x-10 text-sm font-medium uppercase tracking-widest text-stone-600">
+                <a href="#home" class="hover:text-amber-700 transition">Home</a>
                 <a href="#about" class="hover:text-amber-700 transition">About</a>
                 <a href="#youtube" class="hover:text-amber-700 transition">YouTube</a>
                 <a href="#policy" class="hover:text-amber-700 transition">Policy</a>
@@ -54,7 +56,7 @@
             </div>
             <div class="relative">
                 <div class="aspect-[4/5] bg-stone-200 shadow-2xl overflow-hidden rounded-sm">
-                    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80" alt="Piano keys close-up" class="w-full h-full object-cover opacity-90">
+                    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80" alt="Piano keys close-up in studio" class="w-full h-full object-cover opacity-90">
                 </div>
             </div>
         </header>
@@ -66,13 +68,13 @@
                     <p class="text-stone-400 text-lg leading-relaxed">
                         Music is a living art. Explore my YouTube channel to hear performances showcases and insights into the RCM repertoire.
                     </p>
-                    <a href="https://www.youtube.com/user/JMMossMusic" target="_blank" aria-label="YouTube Channel" class="inline-flex items-center space-x-4 px-8 py-4 bg-red-700 hover:bg-red-600 transition-all font-bold uppercase tracking-widest text-sm text-white rounded-sm">
+                    <a href="https://www.youtube.com/user/JMMossMusic" target="_blank" aria-label="Visit the MossMusic YouTube Channel" class="inline-flex items-center space-x-4 px-8 py-4 bg-red-700 hover:bg-red-600 transition-all font-bold uppercase tracking-widest text-sm text-white rounded-sm">
                         <span>Visit MossMusic's YouTube Channel</span>
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                     </a>
                 </div>
                 <div class="relative group block overflow-hidden rounded-sm shadow-2xl border border-white/10">
-                    <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80" alt="Classical piano performance" class="w-full h-full object-cover grayscale opacity-80">
+                    <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80" alt="Classical music performance on piano" class="w-full h-full object-cover grayscale opacity-80">
                 </div>
             </div>
         </section>
@@ -105,7 +107,7 @@
                 <div class="max-w-2xl mx-auto mb-20 bg-white shadow-sm overflow-hidden rounded-sm border border-stone-200">
                     <table class="w-full text-left border-collapse">
                         <thead class="bg-stone-50 border-b border-stone-200"><tr class="text-stone-600"><th class="py-4 px-6 text-xs font-bold uppercase tracking-widest">Duration</th><th class="py-4 px-6 text-xs font-bold uppercase tracking-widest text-right">Rate</th></tr></thead>
-                        <tbody class="text-stone-700">
+                        <tbody class="text-stone-700 font-medium">
                             <tr class="border-b border-stone-100"><td class="py-5 px-6 italic">30 Minutes (Pre-grade 1 only)</td><td class="py-5 px-6 text-right font-semibold">$30</td></tr>
                             <tr class="border-b border-stone-100"><td class="py-5 px-6 italic">45 Minutes</td><td class="py-5 px-6 text-right font-semibold">$40</td></tr>
                             <tr><td class="py-5 px-6 italic">60 Minutes</td><td class="py-5 px-6 text-right font-semibold">$50</td></tr>
@@ -118,40 +120,4 @@
                         <h3 class="text-xl mb-4 text-stone-900 uppercase tracking-wider font-bold">Practice</h3>
                         <p class="text-sm text-stone-600 italic">Daily practice is essential for progress. Theory should be completed prior to each lesson.</p>
                     </div>
-                    <div class="p-8 bg-white shadow-sm border-t-4 border-stone-300">
-                        <h3 class="text-xl mb-4 text-stone-900 uppercase tracking-wider font-bold">Attendance</h3>
-                        <p class="text-sm text-stone-600 italic">No make-ups for missed lessons. Illness cancellations receive credit for the following month.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="rcm" class="py-24 bg-white border-y border-stone-200">
-            <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-                <h2 class="text-4xl text-stone-900 font-serif italic font-medium">RCM Examination Info</h2>
-                <div class="h-px w-20 bg-amber-700 mx-auto" aria-hidden="true"></div>
-                <p class="text-stone-500 max-w-xl mx-auto text-lg leading-relaxed italic">For sessions, syllabus requirements, and registration, please visit the official Royal Conservatory portal.</p>
-                <a href="https://examinations.rcmusic.ca/" target="_blank" class="inline-block border-2 border-stone-800 px-10 py-4 text-stone-900 font-bold uppercase tracking-widest text-xs hover:bg-stone-900 hover:text-white transition-all">Visit RCM Website &rarr;</a>
-            </div>
-        </section>
-
-        <section id="contact" class="bg-[#FAF9F6] py-28 text-center">
-            <div class="max-w-4xl mx-auto px-6 space-y-8">
-                <h2 class="text-4xl text-stone-900 italic font-medium">Registration Update</h2>
-                <div class="h-px w-24 bg-amber-700 mx-auto"></div>
-                <p class="text-stone-700 text-xl leading-relaxed max-w-2xl mx-auto italic">Currently at full capacity for 2025–2026. Not accepting new students or waiting list requests.</p>
-                <div class="pt-12 space-y-4">
-                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-stone-400">Professional Inquiries Only</p>
-                    <a href="mailto:jennifer@mossmusic.ca" class="text-2xl text-stone-900 hover:text-amber-700 transition border-b border-stone-300 pb-2">jennifer@mossmusic.ca</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="py-12 text-center bg-stone-100 border-t border-stone-200">
-        <span class="text-4xl brand-font text-stone-900 block mb-2 leading-none">MossMusic</span>
-        <p class="text-xs text-stone-500 uppercase tracking-[0.3em]">&copy; 2026 • Bedford, Nova Scotia</p>
-    </footer>
-
-</body>
-</html>
+                    <div class="
