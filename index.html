@@ -72,6 +72,10 @@
                     <p data-en="Registered Music Teacher (RMT)" data-fr="Professeure de Musique Agréée (RMT)">Registered Music Teacher (RMT)</p>
                 </div>
 
+                <div class="flex items-center space-x-4 pt-2">
+                    <span class="h-px w-12 bg-amber-700" aria-hidden="true"></span>
+                    <p class="text-sm font-bold text-amber-800 uppercase tracking-widest" data-en="Studio Status: Currently Full" data-fr="Statut du Studio : Complet">Studio Status: Currently Full</p>
+                </div>
             </div>
             <div class="relative">
                 <div class="aspect-[4/5] bg-stone-200 shadow-xl overflow-hidden rounded-sm">
@@ -90,8 +94,10 @@
                     <p data-en="Based in Bedford, Nova Scotia, I offer a structured yet supportive environment. As an RMT with 30 years experience, I emphasize a balanced approach of technical mastery and artistic joy." data-fr="Basée à Bedford, en Nouvelle-Écosse, j'offre un environnement structuré et bienveillant. En tant qu'enseignante agréée (RMT) avec 30 ans d'expérience, je privilégie une approche équilibrée entre maîtrise technique et joie artistique.">
                         Based in Bedford, Nova Scotia, I offer a structured yet supportive environment. As an RMT with 30 years experience, I emphasize a balanced approach of technical mastery and artistic joy.
                     </p>
-                    <p data-en="Whether preparing for RCM examinations or learning for enrichment, each lesson is tailored to the student. Being recognized and winning the RCM Teacher of Distinction award for the Atlantic Provinces (2023) reflects my commitment to excellence." data-fr="Qu'il s'agisse de se préparer aux examens du RCM ou d'apprendre pour le plaisir, chaque leçon est adaptée à l'élève. Le fait d'avoir été reconnue et d'avoir remporté le prix RCM d'excellence à l'enseignement pour les provinces de l'Atlantique (2023) reflète mon engagement envers l'excellence.">
-                        Whether preparing for RCM examinations or learning for enrichment, each lesson is tailored to the student. Being recognized and winning the RCM Teacher of Distinction award for the Atlantic Provinces (2023) reflects my commitment to excellence.
+                    <p>
+                        <span data-en="Whether preparing for RCM examinations or learning for enrichment, each lesson is tailored to the student. Being recognized and winning the " data-fr="Qu'il s'agisse de se préparer aux examens du RCM ou d'apprendre pour le plaisir, chaque leçon est adaptée à l'élève. Le fait d'avoir été reconnue et d'avoir remporté le ">Whether preparing for RCM examinations or learning for enrichment, each lesson is tailored to the student. Being recognized and winning the </span>
+                        <a href="https://www.rcmusic.com/about-us/news/congratulations-to-the-2023-teachers-of-distinctio" target="_blank" class="text-amber-800 font-bold border-b border-amber-800 hover:text-stone-900" data-en="RCM Teacher of Distinction award for the Atlantic Provinces (2023)" data-fr="prix RCM d'excellence à l'enseignement pour les provinces de l'Atlantique (2023)">RCM Teacher of Distinction award for the Atlantic Provinces (2023)</a>
+                        <span data-en=" reflects my commitment to excellence." data-fr=" reflète mon engagement envers l'excellence."> reflects my commitment to excellence.</span>
                     </p>
                 </div>
             </div>
@@ -189,7 +195,7 @@
                 </div>
                 <div class="bg-stone-50 p-10 border border-stone-200">
                     <h3 class="text-lg mb-2 text-stone-900 uppercase tracking-widest font-bold" data-en="Accreditation" data-fr="Accréditation">Accreditation</h3>
-                    <p class="text-stone-600 italic">
+                    <p class="text-stone-600 italic text-lg">
                         <span data-en="Achievements in RCM examinations are recognized for high school credits. Learn more" data-fr="La réussite aux examens du RCM donne droit à des crédits au secondaire. En savoir plus">Achievements in RCM examinations are recognized for high school credits. Learn more</span>
                         <a href="https://www.rcmusic.com/learning/examinations/recognition-accomplishment/high-school-credits-canada" target="_blank" class="text-amber-800 font-bold border-b border-amber-800 hover:text-stone-900 ml-1" data-en="here." data-fr="ici.">here.</a>
                     </p>
@@ -237,11 +243,25 @@
             const elements = document.querySelectorAll('[data-en]');
             
             elements.forEach(el => {
-                const subSpan = el.querySelector('span');
-                if (subSpan) {
-                    subSpan.innerText = subSpan.getAttribute(`data-${lang}`);
-                } else if (el.tagName !== 'A' || el.innerText.includes('.') || el.innerText.includes('?')) {
+                // Handle translation within elements that might contain nested spans (links protection)
+                const subSpans = el.querySelectorAll('span');
+                
+                if (subSpans.length > 0) {
+                    subSpans.forEach(span => {
+                        if (span.hasAttribute(`data-${lang}`)) {
+                            span.innerText = span.getAttribute(`data-${lang}`);
+                        }
+                    });
+                } 
+                
+                // standard translation for text-only elements
+                if (el.hasAttribute(`data-${lang}`) && el.children.length === 0) {
                     el.innerText = el.getAttribute(`data-${lang}`);
+                }
+
+                // specifically handle links with data attributes
+                if (el.tagName === 'A' && el.hasAttribute(`data-${lang}`)) {
+                     el.innerText = el.getAttribute(`data-${lang}`);
                 }
             });
 
