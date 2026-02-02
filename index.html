@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jennifer Moss | Piano, Flute and Theory Instruction Bedford, Nova Scotia</title>
+    <title>Jennifer Moss | Piano, Flute and Theory Instruction Bedford</title>
     
     <link rel="icon" type="image/png" href="images/favicon-treble-clef.png">
     
@@ -17,8 +17,6 @@
         section { scroll-margin-top: 100px; }
         a:focus { outline: 2px solid #92400e; outline-offset: 4px; }
         .lang-btn.active { color: #92400e; font-weight: 700; border-bottom: 2px solid #92400e; }
-        
-        /* Smooth fade for the back-to-top button */
         #backToTop { transition: opacity 0.3s ease, visibility 0.3s; }
     </style>
 </head>
@@ -212,15 +210,45 @@
             </div>
         </section>
 
-        <section id="registration" class="bg-stone-200 py-16 text-center border-t border-stone-300">
-            <div class="max-w-4xl mx-auto px-6 space-y-6">
-                <h2 class="text-4xl text-stone-900 italic font-medium" data-en="Registration Info" data-fr="Infos d'inscription">Registration Info</h2>
-                <div class="h-px w-24 bg-amber-700 mx-auto"></div>
-                <p class="text-stone-700 text-xl leading-relaxed max-w-2xl mx-auto italic" 
-                   data-en="The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests." 
-                   data-fr="Le Studio est complet pour l'année 2025-2026 et n'accepte aucune nouvelle demande.">
-                    The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests.
-                </p>
+        <section id="registration" class="bg-stone-200 py-16 border-t border-stone-300">
+            <div class="max-w-4xl mx-auto px-6 space-y-12">
+                <div class="text-center space-y-6">
+                    <h2 class="text-4xl text-stone-900 italic font-medium" data-en="Registration Info" data-fr="Infos d'inscription">Registration Info</h2>
+                    <div class="h-px w-24 bg-amber-700 mx-auto"></div>
+                    <p class="text-stone-700 text-xl leading-relaxed max-w-2xl mx-auto italic" 
+                       data-en="The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests." 
+                       data-fr="Le Studio est complet pour l'année 2025-2026 et n'accepte aucune nouvelle demande.">
+                        The Studio is currently at full capacity for 2025–2026 teaching year and is not accepting new students or waiting list requests.
+                    </p>
+                </div>
+
+                <div class="max-w-2xl mx-auto bg-white shadow-sm border border-stone-200">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-stone-50 border-b border-stone-200 text-stone-600">
+                            <tr>
+                                <th colspan="2" class="py-4 px-6 text-center text-sm font-bold uppercase tracking-widest text-stone-900">2025 - 2026 Lesson Schedule</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-stone-700 font-medium">
+                            <tr class="border-b border-stone-100">
+                                <td class="py-4 px-6" data-en="Lessons Begin" data-fr="Début des cours">Lessons Begin</td>
+                                <td class="py-4 px-6 text-right font-semibold italic" data-en="September 9" data-fr="9 septembre">September 9</td>
+                            </tr>
+                            <tr class="bg-stone-50 border-b border-stone-100">
+                                <td class="py-4 px-6" data-en="Winter Break" data-fr="Congé d'hiver">Winter Break</td>
+                                <td class="py-4 px-6 text-right font-semibold italic" data-en="December 22 - January 2, 2026" data-fr="22 décembre au 2 janvier 2026">December 22 - January 2, 2026</td>
+                            </tr>
+                            <tr class="border-b border-stone-100">
+                                <td class="py-4 px-6" data-en="March Break" data-fr="Congé de mars">March Break</td>
+                                <td class="py-4 px-6 text-right font-semibold italic" data-en="March 16 - 30" data-fr="16 au 30 mars">March 16 - 30</td>
+                            </tr>
+                            <tr class="bg-stone-50">
+                                <td class="py-4 px-6" data-en="Lessons End" data-fr="Fin des cours">Lessons End</td>
+                                <td class="py-4 px-6 text-right font-semibold italic" data-en="June 25" data-fr="25 juin">June 25</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
@@ -250,7 +278,7 @@
     </footer>
 
     <script>
-        // BACK TO TOP VISIBILITY LOGIC
+        // BACK TO TOP VISIBILITY
         window.onscroll = function() {
             const btn = document.getElementById("backToTop");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
