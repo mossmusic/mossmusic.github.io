@@ -310,24 +310,25 @@
     <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>,
     water temperature from Open-Meteo Marine (satellite/model estimate — treat as a ballpark, especially in
     sheltered coves), tide data from the
-    <a href="https://tides.gc.ca" target="_blank" rel="noopener">Canadian Hydrographic Service (CHS)</a> where available,
-    otherwise a link to check manually is shown. Data is fetched on demand, not live-streamed — press
+    <a href="https://tides.gc.ca" target="_blank" rel="noopener">Canadian Hydrographic Service (CHS)</a> where the
+    live feed responds, otherwise the Tide column links directly to that beach's own tide chart page (tideschart.com,
+    tideking.com, or the CHS station page) instead of a search. Data is fetched on demand, not live-streamed — press
     Refresh for current numbers. This page is intentionally excluded from search engines.
   </footer>
 </div>
 
 <script>
 const BEACHES = [
-  { name:"Mauger's Beach", note:"McNabs Island — ferry/boat access only", lat:44.6072, lon:-63.5511, dist:20 },
-  { name:"Rainbow Haven Beach", note:"Cow Bay", lat:44.5843, lon:-63.4324, dist:25 },
-  { name:"Conrad's Beach", note:"Eastern Shore", lat:44.6626, lon:-63.3499, dist:30 },
-  { name:"Lawrencetown Beach", note:"Provincial Park", lat:44.6493, lon:-63.3567, dist:32 },
-  { name:"Crystal Crescent Beach", note:"Sambro Creek", lat:44.4626, lon:-63.6162, dist:35 },
-  { name:"Martinique Beach", note:"East Petpeswick", lat:44.7167, lon:-63.1167, dist:48 },
-  { name:"Queensland Beach", note:"South Shore", lat:44.6167, lon:-64.0167, dist:50 },
-  { name:"Clam Harbour Beach", note:"Eastern Shore", lat:44.7961, lon:-62.9219, dist:65 },
-  { name:"Bayswater Beach", note:"South Shore", lat:44.5333, lon:-64.1667, dist:65 },
-  { name:"Rissers Beach", note:"South Shore, Petite Riviere", lat:44.2667, lon:-64.4667, dist:95 },
+  { name:"Mauger's Beach", note:"McNabs Island — ferry/boat access only", lat:44.6072, lon:-63.5511, dist:20, tideUrl:"https://www.tides.gc.ca/en/stations/00490" },
+  { name:"Rainbow Haven Beach", note:"Cow Bay", lat:44.5843, lon:-63.4324, dist:25, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Rainbow-Haven/Tides/" },
+  { name:"Conrad's Beach", note:"Eastern Shore", lat:44.6626, lon:-63.3499, dist:30, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Conrad-Beach/" },
+  { name:"Lawrencetown Beach", note:"Provincial Park", lat:44.6493, lon:-63.3567, dist:32, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Lawrencetown-Beach/" },
+  { name:"Crystal Crescent Beach", note:"Sambro Creek", lat:44.4626, lon:-63.6162, dist:35, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Crystal-Crescent-Beach/" },
+  { name:"Martinique Beach", note:"East Petpeswick", lat:44.7167, lon:-63.1167, dist:48, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Martinique-Beach/" },
+  { name:"Queensland Beach", note:"South Shore", lat:44.6167, lon:-64.0167, dist:50, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Queensland-Beach/" },
+  { name:"Clam Harbour Beach", note:"Eastern Shore", lat:44.7961, lon:-62.9219, dist:65, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Clam-Harbour/" },
+  { name:"Bayswater Beach", note:"South Shore", lat:44.5333, lon:-64.1667, dist:65, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Bayswater-Beach/" },
+  { name:"Rissers Beach", note:"South Shore, Petite Riviere", lat:44.2667, lon:-64.4667, dist:95, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Rissers-Beach/" },
 ];
 
 const WCODE = {
@@ -450,7 +451,7 @@ async function refreshRow(row){
   if(td.status==="fulfilled"){ row.tide = td.value.tide; row.tideLink = td.value.tideLink; }
   else {
     row.tide = "Unavailable";
-    row.tideLink = `https://www.google.com/search?q=${encodeURIComponent(row.name+" Nova Scotia tide times")}`;
+    row.tideLink = row.tideUrl;
   }
 }
 
@@ -501,7 +502,7 @@ function render(){
       <td><span class="cond-pill">${row.condIcon||""} ${row.cond==="Unavailable" ? '<span class="err">Unavailable</span>' : row.cond}</span></td>
       <td class="tide-cell">${
         row.tide==="Unavailable"
-          ? `<span class="err">Unavailable</span> — <a href="${row.tideLink}" target="_blank" rel="noopener">check manually</a>`
+          ? `<span class="dim">Live feed unavailable</span><br><a href="${row.tideLink}" target="_blank" rel="noopener">view tide chart →</a>`
           : (row.tideLink ? `${row.tide}<br><a href="${row.tideLink}" target="_blank" rel="noopener">station chart →</a>` : row.tide)
       }</td>
     `;
