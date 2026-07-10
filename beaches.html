@@ -36,33 +36,56 @@
   }
   .wrap{max-width:980px;margin:0 auto;}
   header{
+    position:relative;
     display:flex;
     justify-content:space-between;
     align-items:flex-end;
     flex-wrap:wrap;
     gap:16px;
-    border-bottom:2px solid var(--ink);
-    padding-bottom:18px;
+    padding:36px 28px 22px;
     margin-bottom:22px;
+    border:2px solid var(--ink);
+    border-radius:6px;
+    overflow:hidden;
+    min-height:190px;
+    box-shadow:var(--shadow);
   }
+  header .scene{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+  }
+  header .scene svg{display:block; width:100%; height:100%;}
+  header .scrim{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(180deg, rgba(15,25,35,0.12) 0%, rgba(15,25,35,0.55) 100%);
+  }
+  header .title-block, header .controls{position:relative; z-index:2;}
   .title-block h1{
     font-family:'Fraunces', serif;
     font-weight:600;
-    font-size:2.4rem;
+    font-size:2.5rem;
     margin:0 0 4px;
     letter-spacing:-0.01em;
+    color:#FBF8EF;
+    text-shadow:0 2px 10px rgba(10,20,28,0.35);
   }
   .title-block .eyebrow{
     font-family:'IBM Plex Mono', monospace;
     font-size:0.72rem;
     letter-spacing:0.14em;
     text-transform:uppercase;
-    color:var(--teal-deep);
+    color:#CFE8D8;
   }
   .title-block .sub{
     font-size:0.92rem;
-    color:var(--ink-soft);
+    color:#E7EFE9;
     margin-top:6px;
+    text-shadow:0 1px 6px rgba(10,20,28,0.3);
   }
   .controls{
     display:flex;
@@ -70,6 +93,7 @@
     align-items:flex-end;
     gap:6px;
   }
+  .controls #statusLine{color:#E7EFE9;}
   #refreshBtn{
     font-family:'IBM Plex Mono', monospace;
     font-size:0.82rem;
@@ -185,6 +209,72 @@
 <body>
 <div class="wrap">
   <header>
+    <div class="scene">
+      <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#173B4A"/>
+            <stop offset="55%" stop-color="#2E6E6C"/>
+            <stop offset="100%" stop-color="#E8B978"/>
+          </linearGradient>
+          <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFF3D6"/>
+            <stop offset="60%" stop-color="#F3C673"/>
+            <stop offset="100%" stop-color="#F3C673" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="seaFar" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3F8F86"/>
+            <stop offset="100%" stop-color="#2E6E6C"/>
+          </linearGradient>
+          <linearGradient id="seaNear" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1B4C50"/>
+            <stop offset="100%" stop-color="#123638"/>
+          </linearGradient>
+          <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D8BE86"/>
+            <stop offset="100%" stop-color="#C9A868"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width="1200" height="300" fill="url(#sky)"/>
+        <circle cx="960" cy="95" r="150" fill="url(#sun)"/>
+        <circle cx="960" cy="95" r="46" fill="#FFF6E2"/>
+
+        <!-- gulls -->
+        <path d="M120 60 q10 -12 20 0 q10 -12 20 0" stroke="#12242E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M210 90 q8 -10 16 0 q8 -10 16 0" stroke="#12242E" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M180 45 q7 -9 14 0 q7 -9 14 0" stroke="#12242E" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+        <!-- lighthouse, left -->
+        <g transform="translate(95,120)">
+          <rect x="-6" y="40" width="12" height="70" fill="#F4EEDD"/>
+          <rect x="-6" y="40" width="12" height="10" fill="#8B4A44"/>
+          <rect x="-6" y="60" width="12" height="10" fill="#8B4A44"/>
+          <rect x="-6" y="80" width="12" height="10" fill="#8B4A44"/>
+          <polygon points="-9,40 9,40 0,20" fill="#1C2B3A"/>
+          <rect x="-3" y="14" width="6" height="8" fill="#1C2B3A"/>
+          <rect x="-16" y="108" width="32" height="8" fill="#1C2B3A"/>
+        </g>
+
+        <!-- horizon sea -->
+        <rect x="0" y="150" width="1200" height="55" fill="url(#seaFar)"/>
+        <path d="M0 155 q60 10 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 v-10 h-1200 z" fill="#4A9C93" opacity="0.5"/>
+
+        <!-- mid waves -->
+        <path d="M0 190 q50 -14 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 v120 h-1200 z" fill="url(#seaNear)"/>
+        <path d="M0 205 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0" stroke="#3F8F86" stroke-width="2" fill="none" opacity="0.35"/>
+        <path d="M0 225 q45 -9 90 0 t90 0 t90 0 t90 0 t90 0 t90 0 t90 0 t90 0 t90 0" stroke="#5AB3A6" stroke-width="2" fill="none" opacity="0.25"/>
+
+        <!-- foreground sand -->
+        <path d="M0 250 q150 -22 300 0 t300 0 t300 0 t300 0 v50 h-1200 z" fill="url(#sand)"/>
+        <circle cx="260" cy="270" r="2" fill="#A9772E" opacity="0.4"/>
+        <circle cx="410" cy="280" r="2.4" fill="#A9772E" opacity="0.4"/>
+        <circle cx="700" cy="272" r="2" fill="#A9772E" opacity="0.4"/>
+        <circle cx="960" cy="282" r="2.6" fill="#A9772E" opacity="0.4"/>
+        <circle cx="1080" cy="268" r="2" fill="#A9772E" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="scrim"></div>
     <div class="title-block">
       <div class="eyebrow">Private log · not indexed</div>
       <h1>Beach Watch</h1>
@@ -360,7 +450,7 @@ async function refreshRow(row){
   if(td.status==="fulfilled"){ row.tide = td.value.tide; row.tideLink = td.value.tideLink; }
   else {
     row.tide = "Unavailable";
-    row.tideLink = `https://www.tide-forecast.com/locations/search?query=${encodeURIComponent(row.name+" Nova Scotia")}`;
+    row.tideLink = `https://www.google.com/search?q=${encodeURIComponent(row.name+" Nova Scotia tide times")}`;
   }
 }
 
