@@ -377,6 +377,7 @@
       <option value="name">Beach name</option>
       <option value="air">Air temp</option>
       <option value="water">Water temp</option>
+      <option value="wave">Wave height</option>
       <option value="cond">Conditions</option>
       <option value="tide">Tide</option>
     </select>
@@ -391,6 +392,7 @@
           <th data-key="dist" data-type="number">Distance (km) <span class="arrow">↕</span></th>
           <th data-key="air" data-type="number">Air Temp <span class="arrow">↕</span></th>
           <th data-key="water" data-type="number">Water Temp <span class="arrow">↕</span></th>
+          <th data-key="wave" data-type="number">Wave Height <span class="arrow">↕</span></th>
           <th data-key="cond" data-type="string">Conditions <span class="arrow">↕</span></th>
           <th data-key="tide" data-type="string">Tide <span class="arrow">↕</span></th>
         </tr>
@@ -403,7 +405,7 @@
   <footer>
     Distances are approximate driving distances from Bedford. Air conditions from
     <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>,
-    water temperature from Open-Meteo Marine (satellite/model estimate — treat as a ballpark, especially in
+    water temperature and wave height from Open-Meteo Marine (satellite/model estimate — treat as a ballpark, especially in
     sheltered coves), tide data from the
     <a href="https://tides.gc.ca" target="_blank" rel="noopener">Canadian Hydrographic Service (CHS)</a> where the
     live feed responds, otherwise the Tide column links directly to that beach's own tide chart page (tideschart.com,
@@ -440,7 +442,7 @@ const WCODE = {
 };
 
 let rowData = BEACHES.map(b => ({
-  ...b, air:null, water:null, cond:"—", condIcon:"", tide:"—", tideLink:null
+  ...b, air:null, water:null, wave:null, cond:"—", condIcon:"", tide:"—", tideLink:null
 }));
 let sortKey = "dist", sortDir = 1;
 let iwlsStations = null;
@@ -464,14 +466,18 @@ async function fetchWeather(beach){
   return { air: Math.round(c.temperature_2m), cond: condText, condIcon: icon };
 }
 
-async function fetchWaterTemp(beach){
-  const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${beach.lat}&longitude=${beach.lon}&current=sea_surface_temperature&timezone=auto`;
+async function fetchMarine(beach){
+  const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${beach.lat}&longitude=${beach.lon}&current=sea_surface_temperature,wave_height&timezone=auto`;
   const res = await fetch(url);
   if(!res.ok) throw new Error("marine fetch failed");
   const data = await res.json();
   const t = data.current && data.current.sea_surface_temperature;
+  const w = data.current && data.current.wave_height;
   if(t === undefined || t === null) throw new Error("no sea temp");
-  return Math.round(t*10)/10;
+  return {
+    water: Math.round(t*10)/10,
+    wave: (w === undefined || w === null) ? null : Math.round(w*10)/10
+  };
 }
 
 // Once you've deployed the Cloudflare Worker (see chs-tide-proxy-worker.js),
@@ -562,14 +568,14 @@ async function fetchTide(beach){
 
 async function refreshRow(row){
   const results = await Promise.allSettled([
-    fetchWeather(row), fetchWaterTemp(row), fetchTide(row)
+    fetchWeather(row), fetchMarine(row), fetchTide(row)
   ]);
   const [w, wt, td] = results;
   if(w.status==="fulfilled"){ row.air=w.value.air; row.cond=w.value.cond; row.condIcon=w.value.condIcon; }
   else { row.air=null; row.cond="Unavailable"; row.condIcon=""; }
 
-  if(wt.status==="fulfilled"){ row.water = wt.value; }
-  else { row.water = null; }
+  if(wt.status==="fulfilled"){ row.water = wt.value.water; row.wave = wt.value.wave; }
+  else { row.water = null; row.wave = null; }
 
   if(td.status==="fulfilled"){ row.tide = td.value.tide; row.tideLink = td.value.tideLink; }
   else {
@@ -598,7 +604,7 @@ function sortRows(){
   const dir = sortDir;
   rowData.sort((a,b)=>{
     let av=a[sortKey], bv=b[sortKey];
-    if(sortKey==="air" || sortKey==="water" || sortKey==="dist"){
+    if(sortKey==="air" || sortKey==="water" || sortKey==="wave" || sortKey==="dist"){
       av = (av===null||av===undefined) ? -Infinity : av;
       bv = (bv===null||bv===undefined) ? -Infinity : bv;
       return (av-bv)*dir;
@@ -622,6 +628,7 @@ function render(){
       <td class="mono" data-label="Distance">${row.dist} km</td>
       <td class="mono" data-label="Air Temp">${row.air===null ? '<span class="dim">—</span>' : row.air+"°C"}</td>
       <td class="mono" data-label="Water Temp">${row.water===null ? '<span class="dim">—</span>' : row.water+"°C"}</td>
+      <td class="mono" data-label="Wave Height">${row.wave===null ? '<span class="dim">—</span>' : row.wave+"m"}</td>
       <td data-label="Conditions"><span class="cond-pill">${row.condIcon||""} ${row.cond==="Unavailable" ? '<span class="err">Unavailable</span>' : row.cond}</span></td>
       <td class="tide-cell" data-label="Tide">${
         row.tide==="Unavailable"
