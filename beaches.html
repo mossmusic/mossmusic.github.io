@@ -381,7 +381,7 @@ async function fetchWaterTemp(beach){
 
 // Once you've deployed the Cloudflare Worker (see chs-tide-proxy-worker.js),
 // paste its URL here, e.g. "https://chs-tide-proxy.yourname.workers.dev"
-const TIDE_PROXY = "PASTE_YOUR_WORKER_URL_HERE";
+const TIDE_PROXY = "https://chs-tide-proxy.kirkmoss.workers.dev";
 
 function proxyReady(){
   return TIDE_PROXY && !TIDE_PROXY.startsWith("PASTE_");
