@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Beach Watch — Bedford, NS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#F4EEDD;
+    --parchment-dim:#EAE2CC;
+    --ink:#1C2B3A;
+    --ink-soft:#4A5A6A;
+    --line:#C9BE9C;
+    --teal:#276A6E;
+    --teal-deep:#1B4C50;
+    --brass:#A9772E;
+    --rose:#8B4A44;
+    --good:#3F6B4F;
+    --shadow: 0 8px 24px rgba(28,43,58,0.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, rgba(28,43,58,0.028) 0px, rgba(28,43,58,0.028) 1px, transparent 1px, transparent 28px),
+      repeating-linear-gradient(90deg, rgba(28,43,58,0.028) 0px, rgba(28,43,58,0.028) 1px, transparent 1px, transparent 28px),
+      var(--parchment);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    padding:40px 20px 80px;
+  }
+  .wrap{max-width:980px;margin:0 auto;}
+  header{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:16px;
+    padding:36px 28px 22px;
+    margin-bottom:22px;
+    border:2px solid var(--ink);
+    border-radius:6px;
+    overflow:hidden;
+    min-height:190px;
+    box-shadow:var(--shadow);
+  }
+  header .scene{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+  }
+  header .scene svg{display:block; width:100%; height:100%;}
+  header .scrim{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(180deg, rgba(15,25,35,0.12) 0%, rgba(15,25,35,0.55) 100%);
+  }
+  header .title-block, header .controls{position:relative; z-index:2;}
+  .title-block h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:2.5rem;
+    margin:0 0 4px;
+    letter-spacing:-0.01em;
+    color:#FBF8EF;
+    text-shadow:0 2px 10px rgba(10,20,28,0.35);
+  }
+  .title-block .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:#CFE8D8;
+  }
+  .title-block .sub{
+    font-size:0.92rem;
+    color:#E7EFE9;
+    margin-top:6px;
+    text-shadow:0 1px 6px rgba(10,20,28,0.3);
+  }
+  .controls{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:6px;
+  }
+  .controls #statusLine{color:#E7EFE9;}
+  #refreshBtn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    background:var(--ink);
+    color:var(--parchment);
+    border:none;
+    padding:11px 20px;
+    border-radius:3px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:background 0.15s ease, transform 0.1s ease;
+  }
+  #refreshBtn:hover{background:var(--teal-deep);}
+  #refreshBtn:active{transform:translateY(1px);}
+  #refreshBtn:disabled{background:var(--ink-soft);cursor:progress;}
+  .spinner{
+    width:12px;height:12px;
+    border:2px solid rgba(244,238,221,0.35);
+    border-top-color:var(--parchment);
+    border-radius:50%;
+    display:none;
+    animation:spin 0.7s linear infinite;
+  }
+  #refreshBtn.loading .spinner{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #statusLine{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+  }
+  .table-frame{
+    background:rgba(255,255,255,0.35);
+    border:1px solid var(--line);
+    border-radius:6px;
+    box-shadow:var(--shadow);
+    overflow-x:auto;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:760px;
+  }
+  thead th{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    text-align:left;
+    padding:14px 16px;
+    background:var(--teal-deep);
+    color:var(--parchment);
+    cursor:pointer;
+    user-select:none;
+    white-space:nowrap;
+    position:relative;
+  }
+  thead th:hover{background:var(--teal);}
+  thead th .arrow{
+    display:inline-block;
+    margin-left:6px;
+    opacity:0.4;
+    font-size:0.65rem;
+  }
+  thead th.sorted .arrow{opacity:1;}
+  tbody td{
+    padding:14px 16px;
+    border-bottom:1px solid var(--line);
+    font-size:0.9rem;
+    vertical-align:middle;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:rgba(39,106,110,0.06);}
+  .beach-name{font-weight:600;}
+  .beach-note{
+    display:block;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    font-weight:400;
+    margin-top:2px;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace; font-variant-numeric:tabular-nums;}
+  .cond-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.85rem;
+  }
+  .tide-cell{font-size:0.8rem; line-height:1.4;}
+  .tide-cell a{color:var(--teal-deep);}
+  .dim{color:var(--ink-soft); font-style:italic;}
+  .err{color:var(--rose); font-style:italic;}
+  footer{
+    margin-top:26px;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+    line-height:1.6;
+  }
+  footer a{color:var(--teal-deep);}
+  @media (max-width:640px){
+    .title-block h1{font-size:1.8rem;}
+    header{flex-direction:column;align-items:flex-start;}
+    .controls{align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="scene">
+      <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#173B4A"/>
+            <stop offset="55%" stop-color="#2E6E6C"/>
+            <stop offset="100%" stop-color="#E8B978"/>
+          </linearGradient>
+          <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFF3D6"/>
+            <stop offset="60%" stop-color="#F3C673"/>
+            <stop offset="100%" stop-color="#F3C673" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="seaFar" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3F8F86"/>
+            <stop offset="100%" stop-color="#2E6E6C"/>
+          </linearGradient>
+          <linearGradient id="seaNear" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1B4C50"/>
+            <stop offset="100%" stop-color="#123638"/>
+          </linearGradient>
+          <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D8BE86"/>
+            <stop offset="100%" stop-color="#C9A868"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width="1200" height="300" fill="url(#sky)"/>
+        <circle cx="960" cy="95" r="150" fill="url(#sun)"/>
+        <circle cx="960" cy="95" r="46" fill="#FFF6E2"/>
+
+        <!-- gulls -->
+        <path d="M120 60 q10 -12 20 0 q10 -12 20 0" stroke="#12242E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M210 90 q8 -10 16 0 q8 -10 16 0" stroke="#12242E" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M180 45 q7 -9 14 0 q7 -9 14 0" stroke="#12242E" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+        <!-- lighthouse, left -->
+        <g transform="translate(95,120)">
+          <rect x="-6" y="40" width="12" height="70" fill="#F4EEDD"/>
+          <rect x="-6" y="40" width="12" height="10" fill="#8B4A44"/>
+          <rect x="-6" y="60" width="12" height="10" fill="#8B4A44"/>
+          <rect x="-6" y="80" width="12" height="10" fill="#8B4A44"/>
+          <polygon points="-9,40 9,40 0,20" fill="#1C2B3A"/>
+          <rect x="-3" y="14" width="6" height="8" fill="#1C2B3A"/>
+          <rect x="-16" y="108" width="32" height="8" fill="#1C2B3A"/>
+        </g>
+
+        <!-- horizon sea -->
+        <rect x="0" y="150" width="1200" height="55" fill="url(#seaFar)"/>
+        <path d="M0 155 q60 10 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 v-10 h-1200 z" fill="#4A9C93" opacity="0.5"/>
+
+        <!-- mid waves -->
+        <path d="M0 190 q50 -14 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 v120 h-1200 z" fill="url(#seaNear)"/>
+        <path d="M0 205 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0" stroke="#3F8F86" stroke-width="2" fill="none" opacity="0.35"/>
+        <path d="M0 225 q45 -9 90 0 t90 0 t90 0 t90 0 t90 0 t90 0 t90 0 t90 0 t90 0" stroke="#5AB3A6" stroke-width="2" fill="none" opacity="0.25"/>
+
+        <!-- foreground sand -->
+        <path d="M0 250 q150 -22 300 0 t300 0 t300 0 t300 0 v50 h-1200 z" fill="url(#sand)"/>
+        <circle cx="260" cy="270" r="2" fill="#A9772E" opacity="0.4"/>
+        <circle cx="410" cy="280" r="2.4" fill="#A9772E" opacity="0.4"/>
+        <circle cx="700" cy="272" r="2" fill="#A9772E" opacity="0.4"/>
+        <circle cx="960" cy="282" r="2.6" fill="#A9772E" opacity="0.4"/>
+        <circle cx="1080" cy="268" r="2" fill="#A9772E" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="scrim"></div>
+    <div class="title-block">
+      <div class="eyebrow">Private log · not indexed</div>
+      <h1>Beach Watch</h1>
+      <div class="sub">Salt water beaches within 100 km of Bedford, Nova Scotia</div>
+    </div>
+    <div class="controls">
+      <button id="refreshBtn" onclick="refreshAll()">
+        <span class="spinner"></span><span id="refreshLabel">Refresh conditions</span>
+      </button>
+      <div id="statusLine">Not yet loaded</div>
+    </div>
+  </header>
+
+  <div class="table-frame">
+    <table>
+      <thead>
+        <tr>
+          <th data-key="name" data-type="string">Beach <span class="arrow">↕</span></th>
+          <th data-key="dist" data-type="number">Distance (km) <span class="arrow">↕</span></th>
+          <th data-key="air" data-type="number">Air Temp <span class="arrow">↕</span></th>
+          <th data-key="water" data-type="number">Water Temp <span class="arrow">↕</span></th>
+          <th data-key="cond" data-type="string">Conditions <span class="arrow">↕</span></th>
+          <th data-key="tide" data-type="string">Tide <span class="arrow">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Distances are approximate driving distances from Bedford. Air conditions from
+    <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>,
+    water temperature from Open-Meteo Marine (satellite/model estimate — treat as a ballpark, especially in
+    sheltered coves), tide data from the
+    <a href="https://tides.gc.ca" target="_blank" rel="noopener">Canadian Hydrographic Service (CHS)</a> where the
+    live feed responds, otherwise the Tide column links directly to that beach's own tide chart page (tideschart.com,
+    tideking.com, or the CHS station page) instead of a search. Data is fetched on demand, not live-streamed — press
+    Refresh for current numbers. This page is intentionally excluded from search engines.
+  </footer>
+</div>
+
+<script>
+const BEACHES = [
+  { name:"Mauger's Beach", note:"McNabs Island — ferry/boat access only", lat:44.6072, lon:-63.5511, dist:20, tideUrl:"https://www.tides.gc.ca/en/stations/00490" },
+  { name:"Rainbow Haven Beach", note:"Cow Bay", lat:44.5843, lon:-63.4324, dist:25, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Rainbow-Haven/Tides/" },
+  { name:"Conrad's Beach", note:"Eastern Shore", lat:44.6626, lon:-63.3499, dist:30, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Conrad-Beach/" },
+  { name:"Lawrencetown Beach", note:"Provincial Park", lat:44.6493, lon:-63.3567, dist:32, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Lawrencetown-Beach/" },
+  { name:"Crystal Crescent Beach", note:"Sambro Creek", lat:44.4626, lon:-63.6162, dist:35, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Crystal-Crescent-Beach/" },
+  { name:"Martinique Beach", note:"East Petpeswick", lat:44.7167, lon:-63.1167, dist:48, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Martinique-Beach/" },
+  { name:"Queensland Beach", note:"South Shore", lat:44.6167, lon:-64.0167, dist:50, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Queensland-Beach/" },
+  { name:"Clam Harbour Beach", note:"Eastern Shore", lat:44.7961, lon:-62.9219, dist:65, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Clam-Harbour/" },
+  { name:"Bayswater Beach", note:"South Shore", lat:44.5333, lon:-64.1667, dist:65, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Bayswater-Beach/" },
+  { name:"Rissers Beach", note:"South Shore, Petite Riviere", lat:44.2667, lon:-64.4667, dist:95, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Rissers-Beach/" },
+];
+
+const WCODE = {
+  0:["Clear","☀️"],1:["Mostly clear","🌤️"],2:["Partly cloudy","⛅"],3:["Overcast","☁️"],
+  45:["Fog","🌫️"],48:["Freezing fog","🌫️"],
+  51:["Light drizzle","🌦️"],53:["Drizzle","🌦️"],55:["Heavy drizzle","🌦️"],
+  56:["Freezing drizzle","🌦️"],57:["Freezing drizzle","🌦️"],
+  61:["Light rain","🌧️"],63:["Rain","🌧️"],65:["Heavy rain","🌧️"],
+  66:["Freezing rain","🌧️"],67:["Freezing rain","🌧️"],
+  71:["Light snow","🌨️"],73:["Snow","🌨️"],75:["Heavy snow","🌨️"],77:["Snow grains","🌨️"],
+  80:["Rain showers","🌦️"],81:["Rain showers","🌦️"],82:["Heavy showers","🌧️"],
+  85:["Snow showers","🌨️"],86:["Snow showers","🌨️"],
+  95:["Thunderstorm","⛈️"],96:["Thunderstorm / hail","⛈️"],99:["Thunderstorm / hail","⛈️"]
+};
+
+let rowData = BEACHES.map(b => ({
+  ...b, air:null, water:null, cond:"—", condIcon:"", tide:"—", tideLink:null
+}));
+let sortKey = "dist", sortDir = 1;
+let iwlsStations = null;
+
+function haversine(lat1,lon1,lat2,lon2){
+  const R=6371, toRad=d=>d*Math.PI/180;
+  const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+  const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+
+async function fetchWeather(beach){
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${beach.lat}&longitude=${beach.lon}&current=temperature_2m,precipitation,weathercode&timezone=auto`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error("weather fetch failed");
+  const data = await res.json();
+  const c = data.current;
+  const [label, icon] = WCODE[c.weathercode] || ["Unknown",""];
+  let condText = label;
+  if(c.precipitation > 0) condText += ` (${c.precipitation}mm)`;
+  return { air: Math.round(c.temperature_2m), cond: condText, condIcon: icon };
+}
+
+async function fetchWaterTemp(beach){
+  const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${beach.lat}&longitude=${beach.lon}&current=sea_surface_temperature&timezone=auto`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error("marine fetch failed");
+  const data = await res.json();
+  const t = data.current && data.current.sea_surface_temperature;
+  if(t === undefined || t === null) throw new Error("no sea temp");
+  return Math.round(t*10)/10;
+}
+
+// Once you've deployed the Cloudflare Worker (see chs-tide-proxy-worker.js),
+// paste its URL here, e.g. "https://chs-tide-proxy.yourname.workers.dev"
+const TIDE_PROXY = "PASTE_YOUR_WORKER_URL_HERE";
+
+function proxyReady(){
+  return TIDE_PROXY && !TIDE_PROXY.startsWith("PASTE_");
+}
+
+async function getIwlsStations(){
+  if(!proxyReady()) throw new Error("tide proxy not configured");
+  if(iwlsStations) return iwlsStations;
+  const res = await fetch(`${TIDE_PROXY}/api/v1/stations`);
+  if(!res.ok){
+    console.error("Station list fetch failed: HTTP " + res.status);
+    throw new Error("station list failed");
+  }
+  iwlsStations = await res.json();
+  console.log(`Loaded ${iwlsStations.length} CHS stations via proxy.`);
+  return iwlsStations;
+}
+
+function nearestTidalStation(stations, lat, lon){
+  let best=null, bestDist=Infinity;
+  for(const s of stations){
+    if(s.latitude==null || s.longitude==null) continue;
+    const hasPredictions = Array.isArray(s.timeSeries) &&
+      s.timeSeries.some(ts => ts.code === "wlp" || ts.code === "wlp-hilo");
+    if(!hasPredictions) continue;
+    const d = haversine(lat,lon,s.latitude,s.longitude);
+    if(d < bestDist){ bestDist=d; best=s; }
+  }
+  return best;
+}
+
+async function fetchTide(beach){
+  const stations = await getIwlsStations();
+  const station = nearestTidalStation(stations, beach.lat, beach.lon);
+  if(!station){
+    console.error(`No tidal station found near ${beach.name}`);
+    throw new Error("no station found");
+  }
+  console.log(`${beach.name} -> nearest station: ${station.officialName} (${station.id})`);
+
+  // CHS's API expects ISO-8601 without milliseconds (toISOString() adds .000)
+  const toChsIso = d => d.toISOString().replace(/\.\d{3}Z$/, "Z");
+  const now = new Date();
+  const from = toChsIso(new Date(now.getTime() - 3*3600*1000));
+  const to = toChsIso(new Date(now.getTime() + 15*3600*1000));
+  const url = `${TIDE_PROXY}/api/v1/stations/${station.id}/data?time-series-code=wlp&from=${from}&to=${to}&resolution=FIFTEEN_MINUTES`;
+  const res = await fetch(url);
+  if(!res.ok){
+    const body = await res.text().catch(()=> "");
+    console.error(`Tide fetch failed for ${beach.name} (station ${station.officialName || station.id}): HTTP ${res.status}`, body);
+    throw new Error("tide data failed: " + res.status);
+  }
+  const points = await res.json();
+  if(!Array.isArray(points) || points.length < 3) throw new Error("no tide points");
+
+  // find current index (last point <= now)
+  let curIdx = 0;
+  for(let i=0;i<points.length;i++){
+    if(new Date(points[i].eventDate) <= now) curIdx = i;
+  }
+  const trendUp = points[Math.min(curIdx+1,points.length-1)].value > points[curIdx].value;
+
+  // find next local extremum after curIdx
+  let nextExtremaTime=null, nextExtremaVal=null, nextType=null;
+  for(let i=curIdx+1;i<points.length-1;i++){
+    const prev=points[i-1].value, cur=points[i].value, next=points[i+1].value;
+    if((cur>=prev && cur>=next) || (cur<=prev && cur<=next)){
+      nextExtremaTime = new Date(points[i].eventDate);
+      nextExtremaVal = cur;
+      nextType = cur>=prev && cur>=next ? "High" : "Low";
+      break;
+    }
+  }
+  const timeStr = nextExtremaTime ? nextExtremaTime.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'}) : "?";
+  const arrow = trendUp ? "↑" : "↓";
+  const tideText = nextExtremaTime
+    ? `${arrow} Next ${nextType} ${timeStr} (${nextExtremaVal.toFixed(1)}m)`
+    : `${arrow} ${trendUp ? "Rising" : "Falling"}`;
+  return { tide: tideText, tideLink: `https://www.tides.gc.ca/en/stations/${station.id}` };
+}
+
+async function refreshRow(row){
+  const results = await Promise.allSettled([
+    fetchWeather(row), fetchWaterTemp(row), fetchTide(row)
+  ]);
+  const [w, wt, td] = results;
+  if(w.status==="fulfilled"){ row.air=w.value.air; row.cond=w.value.cond; row.condIcon=w.value.condIcon; }
+  else { row.air=null; row.cond="Unavailable"; row.condIcon=""; }
+
+  if(wt.status==="fulfilled"){ row.water = wt.value; }
+  else { row.water = null; }
+
+  if(td.status==="fulfilled"){ row.tide = td.value.tide; row.tideLink = td.value.tideLink; }
+  else {
+    row.tide = "Unavailable";
+    row.tideLink = row.tideUrl;
+  }
+}
+
+async function refreshAll(){
+  const btn = document.getElementById('refreshBtn');
+  const label = document.getElementById('refreshLabel');
+  const status = document.getElementById('statusLine');
+  btn.disabled = true; btn.classList.add('loading');
+  label.textContent = "Fetching…";
+  status.textContent = "Contacting Open-Meteo and CHS…";
+
+  await Promise.all(rowData.map(row => refreshRow(row)));
+
+  render();
+  btn.disabled = false; btn.classList.remove('loading');
+  label.textContent = "Refresh conditions";
+  status.textContent = "Last updated " + new Date().toLocaleString('en-CA', {dateStyle:'medium', timeStyle:'short'});
+}
+
+function sortRows(){
+  const dir = sortDir;
+  rowData.sort((a,b)=>{
+    let av=a[sortKey], bv=b[sortKey];
+    if(sortKey==="air" || sortKey==="water" || sortKey==="dist"){
+      av = (av===null||av===undefined) ? -Infinity : av;
+      bv = (bv===null||bv===undefined) ? -Infinity : bv;
+      return (av-bv)*dir;
+    }
+    av = (av||"").toString().toLowerCase();
+    bv = (bv||"").toString().toLowerCase();
+    if(av<bv) return -1*dir;
+    if(av>bv) return 1*dir;
+    return 0;
+  });
+}
+
+function render(){
+  sortRows();
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = "";
+  for(const row of rowData){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="beach-name">${row.name}</span>${row.note ? `<span class="beach-note">${row.note}</span>` : ""}</td>
+      <td class="mono">${row.dist} km</td>
+      <td class="mono">${row.air===null ? '<span class="dim">—</span>' : row.air+"°C"}</td>
+      <td class="mono">${row.water===null ? '<span class="dim">—</span>' : row.water+"°C"}</td>
+      <td><span class="cond-pill">${row.condIcon||""} ${row.cond==="Unavailable" ? '<span class="err">Unavailable</span>' : row.cond}</span></td>
+      <td class="tide-cell">${
+        row.tide==="Unavailable"
+          ? `<span class="dim">Live feed unavailable</span><br><a href="${row.tideLink}" target="_blank" rel="noopener">view tide chart →</a>`
+          : (row.tideLink ? `${row.tide}<br><a href="${row.tideLink}" target="_blank" rel="noopener">station chart →</a>` : row.tide)
+      }</td>
+    `;
+    tbody.appendChild(tr);
+  }
+  document.querySelectorAll('thead th').forEach(th=>{
+    th.classList.toggle('sorted', th.dataset.key===sortKey);
+    const arrow = th.querySelector('.arrow');
+    if(th.dataset.key===sortKey){ arrow.textContent = sortDir===1 ? "▲" : "▼"; }
+    else { arrow.textContent = "↕"; }
+  });
+}
+
+document.querySelectorAll('thead th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const key = th.dataset.key;
+    if(sortKey===key) sortDir *= -1;
+    else { sortKey = key; sortDir = 1; }
+    render();
+  });
+});
+
+// initial render with placeholders, then auto-load once
+render();
+refreshAll();
+</script>
+</body>
+</html>
