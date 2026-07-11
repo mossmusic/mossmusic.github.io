@@ -379,9 +379,18 @@ async function fetchWaterTemp(beach){
   return Math.round(t*10)/10;
 }
 
+// Once you've deployed the Cloudflare Worker (see chs-tide-proxy-worker.js),
+// paste its URL here, e.g. "https://chs-tide-proxy.yourname.workers.dev"
+const TIDE_PROXY = "PASTE_YOUR_WORKER_URL_HERE";
+
+function proxyReady(){
+  return TIDE_PROXY && !TIDE_PROXY.startsWith("PASTE_");
+}
+
 async function getIwlsStations(){
+  if(!proxyReady()) throw new Error("tide proxy not configured");
   if(iwlsStations) return iwlsStations;
-  const res = await fetch("https://api-iwls.dfo-mpo.gc.ca/api/v1/stations");
+  const res = await fetch(`${TIDE_PROXY}/api/v1/stations`);
   if(!res.ok) throw new Error("station list failed");
   iwlsStations = await res.json();
   return iwlsStations;
@@ -405,7 +414,7 @@ async function fetchTide(beach){
   const now = new Date();
   const from = new Date(now.getTime() - 3*3600*1000).toISOString();
   const to = new Date(now.getTime() + 15*3600*1000).toISOString();
-  const url = `https://api-iwls.dfo-mpo.gc.ca/api/v1/stations/${station.id}/data?time-series-code=wlp&from=${from}&to=${to}&resolution=FIFTEEN_MINUTES`;
+  const url = `${TIDE_PROXY}/api/v1/stations/${station.id}/data?time-series-code=wlp&from=${from}&to=${to}&resolution=FIFTEEN_MINUTES`;
   const res = await fetch(url);
   if(!res.ok) throw new Error("tide data failed");
   const points = await res.json();
