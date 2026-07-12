@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<title>Beach Watch — Bedford, NS</title>
+<title>Beach Watch — Nova Scotia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -196,6 +196,37 @@
   }
   footer a{color:var(--teal-deep);}
 
+  .filter-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:18px;
+    align-items:flex-end;
+  }
+  .filter-field{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .filter-field label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+  }
+  .filter-field select{
+    font-family:'Inter', sans-serif;
+    font-size:0.92rem;
+    padding:9px 12px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:rgba(255,255,255,0.55);
+    color:var(--ink);
+    min-width:190px;
+    cursor:pointer;
+  }
+
   .mobile-sort-bar{
     display:none;
     align-items:center;
@@ -232,6 +263,10 @@
     .controls{align-items:flex-start;}
 
     .mobile-sort-bar{display:flex;}
+
+    .filter-bar{gap:12px;}
+    .filter-field{flex:1; min-width:0;}
+    .filter-field select{min-width:0; width:100%;}
 
     /* Card layout: table rows become stacked cards */
     .table-frame{background:transparent;border:none;box-shadow:none;overflow-x:visible;}
@@ -354,9 +389,8 @@
     </div>
     <div class="scrim"></div>
     <div class="title-block">
-      <!-- <div class="eyebrow">Private log · not indexed</div> -->
-      <h1>Halifax Beach Watch</h1>
-      <div class="sub">Salt water beaches within 100 km of Halifax, Nova Scotia</div>
+      <h1>Beach Watch</h1>
+      <div class="sub" id="subLine">Salt water beaches within 100 km of Bedford, Nova Scotia</div>
     </div>
     <div class="controls">
       <div class="controls-row">
@@ -370,6 +404,17 @@
       </div>
     </div>
   </header>
+
+  <div class="filter-bar">
+    <div class="filter-field">
+      <label for="citySelect">From</label>
+      <select id="citySelect"></select>
+    </div>
+    <div class="filter-field">
+      <label for="radiusSelect">Within</label>
+      <select id="radiusSelect"></select>
+    </div>
+  </div>
 
   <div class="mobile-sort-bar">
     <label for="sortKeySelect">Sort by</label>
@@ -404,7 +449,10 @@
   </div>
 
   <footer>
-    Distances are approximate driving distances from Bedford. Air conditions from
+    Distances are real driving distances from your selected city, calculated via
+    <a href="https://project-osrm.org" target="_blank" rel="noopener">OSRM</a> (OpenStreetMap routing data).
+    A distance shown with a "~" is a straight-line estimate instead — this happens for places without road
+    access (like Mauger's Beach, boat-access only) or if the routing service is briefly unavailable. Air conditions from
     <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>,
     water temperature and wave height from Open-Meteo Marine (satellite/model estimate — treat as a ballpark, especially in
     sheltered coves), tide data from the
@@ -416,18 +464,66 @@
 </div>
 
 <script>
+// Distances are computed live from whichever city is selected below,
+// so beaches no longer carry a fixed dist — just coordinates.
 const BEACHES = [
-  { name:"Mauger's Beach", note:"McNabs Island — ferry/boat access only", lat:44.6072, lon:-63.5511, dist:20, tideUrl:"https://www.tides.gc.ca/en/stations/00490" },
-  { name:"Rainbow Haven Beach", note:"Cow Bay", lat:44.5843, lon:-63.4324, dist:25, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Rainbow-Haven/Tides/" },
-  { name:"Conrad's Beach", note:"Eastern Shore", lat:44.6626, lon:-63.3499, dist:30, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Conrad-Beach/" },
-  { name:"Lawrencetown Beach", note:"Provincial Park", lat:44.6493, lon:-63.3567, dist:32, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Lawrencetown-Beach/" },
-  { name:"Crystal Crescent Beach", note:"Sambro Creek", lat:44.4626, lon:-63.6162, dist:35, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Crystal-Crescent-Beach/" },
-  { name:"Martinique Beach", note:"East Petpeswick", lat:44.7167, lon:-63.1167, dist:48, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Martinique-Beach/" },
-  { name:"Queensland Beach", note:"South Shore", lat:44.6167, lon:-64.0167, dist:50, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Queensland-Beach/" },
-  { name:"Clam Harbour Beach", note:"Eastern Shore", lat:44.7961, lon:-62.9219, dist:65, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Clam-Harbour/" },
-  { name:"Bayswater Beach", note:"South Shore", lat:44.5333, lon:-64.1667, dist:65, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Bayswater-Beach/" },
-  { name:"Rissers Beach", note:"South Shore, Petite Riviere", lat:44.2667, lon:-64.4667, dist:95, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Rissers-Beach/" },
+  { name:"Mauger's Beach", note:"McNabs Island — ferry/boat access only", lat:44.6072, lon:-63.5511, tideUrl:"https://www.tides.gc.ca/en/stations/00490" },
+  { name:"Rainbow Haven Beach", note:"Cow Bay", lat:44.5843, lon:-63.4324, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Rainbow-Haven/Tides/" },
+  { name:"Conrad's Beach", note:"Eastern Shore", lat:44.6626, lon:-63.3499, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Conrad-Beach/" },
+  { name:"Lawrencetown Beach", note:"Provincial Park", lat:44.6493, lon:-63.3567, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Lawrencetown-Beach/" },
+  { name:"Crystal Crescent Beach", note:"Sambro Creek", lat:44.4626, lon:-63.6162, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Crystal-Crescent-Beach/" },
+  { name:"Martinique Beach", note:"East Petpeswick", lat:44.7167, lon:-63.1167, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Martinique-Beach/" },
+  { name:"Queensland Beach", note:"South Shore", lat:44.6167, lon:-64.0167, tideUrl:"https://tideking.com/Canada/Nova-Scotia/Queensland-Beach/" },
+  { name:"Clam Harbour Beach", note:"Eastern Shore", lat:44.7961, lon:-62.9219, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Clam-Harbour/" },
+  { name:"Bayswater Beach", note:"South Shore", lat:44.5333, lon:-64.1667, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Bayswater-Beach/" },
+  { name:"Rissers Beach", note:"South Shore, Petite Riviere", lat:44.2667, lon:-64.4667, tideUrl:"https://www.tideschart.com/Canada/Nova-Scotia/Rissers-Beach/" },
+  { name:"Carters Beach", note:"South Shore, near Port Mouton", lat:43.9836, lon:-64.8261, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Summerville Beach", note:"Provincial Park, South Shore", lat:43.9333, lon:-64.9167, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Cherry Hill Beach", note:"South Shore", lat:44.2333, lon:-64.5833, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Hirtles Beach", note:"South Shore, near LaHave", lat:44.2667, lon:-64.3667, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Melmerby Beach", note:"Provincial Park, Northumberland Shore — warm shallow water", lat:45.6167, lon:-62.5667, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Caribou Beach", note:"Provincial Park, Northumberland Shore", lat:45.7333, lon:-62.6833, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Heather Beach", note:"Provincial Park, Northumberland Shore", lat:45.8419, lon:-63.9958, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Rushton's Beach", note:"Provincial Park, near Wallace", lat:45.7833, lon:-63.5000, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Point Michaud Beach", note:"Provincial Park, Cape Breton", lat:45.6206, lon:-60.7822, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Ingonish Beach", note:"Cape Breton Highlands", lat:46.6706, lon:-60.3872, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Dominion Beach", note:"Provincial Park, near Sydney, Cape Breton", lat:46.2064, lon:-60.0522, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Kennington Cove", note:"Near Louisbourg, Cape Breton", lat:45.8886, lon:-59.9989, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Mavillette Beach", note:"Provincial Park, near Yarmouth", lat:44.0806, lon:-66.1497, tideUrl:"https://www.tides.gc.ca" },
+  { name:"Sandy Cove Beach", note:"Digby Neck", lat:44.4919, lon:-66.1039, tideUrl:"https://www.tides.gc.ca" },
 ];
+
+// Origin cities a person might drive from — distances below are calculated
+// live (straight-line) from whichever of these is selected.
+const NS_CITIES = [
+  { name:"Bedford", lat:44.7325, lon:-63.6801 },
+  { name:"Halifax", lat:44.6488, lon:-63.5752 },
+  { name:"Dartmouth", lat:44.6710, lon:-63.5675 },
+  { name:"Lower Sackville", lat:44.7810, lon:-63.6897 },
+  { name:"Truro", lat:45.3675, lon:-63.2646 },
+  { name:"New Glasgow", lat:45.5919, lon:-62.6469 },
+  { name:"Pictou", lat:45.6785, lon:-62.7089 },
+  { name:"Antigonish", lat:45.6180, lon:-61.9980 },
+  { name:"Port Hawkesbury", lat:45.6169, lon:-61.3487 },
+  { name:"Sydney", lat:46.1368, lon:-60.1942 },
+  { name:"Baddeck", lat:46.1003, lon:-60.7511 },
+  { name:"Amherst", lat:45.8335, lon:-64.2114 },
+  { name:"Windsor", lat:44.9903, lon:-64.1373 },
+  { name:"Wolfville", lat:45.0918, lon:-64.3644 },
+  { name:"Kentville", lat:45.0778, lon:-64.4953 },
+  { name:"Middleton", lat:44.9479, lon:-65.0713 },
+  { name:"Bridgewater", lat:44.3773, lon:-64.5220 },
+  { name:"Lunenburg", lat:44.3775, lon:-64.3103 },
+  { name:"Liverpool", lat:44.0384, lon:-64.7147 },
+  { name:"Shelburne", lat:43.7625, lon:-65.3223 },
+  { name:"Yarmouth", lat:43.8375, lon:-66.1174 },
+  { name:"Digby", lat:44.6229, lon:-65.7574 },
+  { name:"Annapolis Royal", lat:44.7440, lon:-65.5152 },
+];
+const RADIUS_OPTIONS = [50, 100, 150, 200, 300, 500];
+
+let origin = NS_CITIES[0];
+let radiusKm = 100;
 
 const WCODE = {
   0:["Clear","☀️"],1:["Mostly clear","🌤️"],2:["Partly cloudy","⛅"],3:["Overcast","☁️"],
@@ -443,7 +539,7 @@ const WCODE = {
 };
 
 let rowData = BEACHES.map(b => ({
-  ...b, air:null, water:null, wave:null, cond:"—", condIcon:"", tide:"—", tideLink:null
+  ...b, dist:null, distIsEstimate:false, air:null, water:null, wave:null, cond:"—", condIcon:"", tide:"—", tideLink:null
 }));
 let sortKey = "dist", sortDir = 1;
 let iwlsStations = null;
@@ -453,6 +549,61 @@ function haversine(lat1,lon1,lat2,lon2){
   const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
   const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
   return 2*R*Math.asin(Math.sqrt(a));
+}
+
+// Once you've deployed the OSRM proxy Worker (see osrm-distance-proxy-worker.js),
+// paste its URL here, e.g. "https://osrm-distance-proxy.yourname.workers.dev"
+const OSRM_PROXY = "PASTE_YOUR_OSRM_WORKER_URL_HERE";
+
+function osrmReady(){
+  return OSRM_PROXY && !OSRM_PROXY.startsWith("PASTE_");
+}
+
+function computeStraightLineDistances(){
+  for(const row of rowData){
+    row.dist = Math.round(haversine(origin.lat, origin.lon, row.lat, row.lon));
+    row.distIsEstimate = true;
+  }
+}
+
+// Fetches real driving distance from the current origin to every beach in
+// a single OSRM "table" request. Falls back to straight-line distance for
+// any beach OSRM can't reach by road (e.g. Mauger's Beach, boat-access only)
+// or if the OSRM service is unreachable entirely.
+async function computeDistances(){
+  computeStraightLineDistances(); // always have a fallback in place first
+
+  if(!osrmReady()) return;
+
+  const coordString = [origin, ...rowData]
+    .map(p => `${p.lon},${p.lat}`)
+    .join(";");
+  const url = `${OSRM_PROXY}/table/v1/driving/${coordString}?sources=0&annotations=distance`;
+
+  try {
+    const res = await fetch(url);
+    if(!res.ok) throw new Error("OSRM table request failed: HTTP " + res.status);
+    const data = await res.json();
+    const distancesMeters = data.distances && data.distances[0];
+    if(!Array.isArray(distancesMeters)) throw new Error("OSRM returned no distance matrix");
+
+    rowData.forEach((row, i) => {
+      const meters = distancesMeters[i + 1]; // index 0 is the origin itself
+      if(meters !== null && meters !== undefined){
+        row.dist = Math.round(meters / 1000);
+        row.distIsEstimate = false;
+      }
+      // else: leave the straight-line fallback already set above
+    });
+    console.log(`Driving distances loaded from OSRM for ${origin.name}.`);
+  } catch(err) {
+    console.error("OSRM driving-distance fetch failed, using straight-line estimates instead:", err);
+  }
+}
+
+function updateSubLine(){
+  document.getElementById('subLine').textContent =
+    `Salt water beaches within ${radiusKm} km of ${origin.name}, Nova Scotia`;
 }
 
 async function fetchWeather(beach){
@@ -619,11 +770,15 @@ function render(){
   sortRows();
   const tbody = document.getElementById('tbody');
   tbody.innerHTML = "";
-  for(const row of rowData){
+  const visible = rowData.filter(row => row.dist !== null && row.dist <= radiusKm);
+  if(visible.length === 0){
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px; font-style:italic; color:var(--ink-soft);">No beaches within ${radiusKm} km of ${origin.name}. Try a larger radius.</td></tr>`;
+  }
+  for(const row of visible){
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td data-label="Beach"><span class="beach-name">${row.name}</span>${row.note ? `<span class="beach-note">${row.note}</span>` : ""}</td>
-      <td class="mono" data-label="Distance">${row.dist} km</td>
+      <td class="mono" data-label="Distance" title="${row.distIsEstimate ? 'Straight-line estimate — driving distance unavailable' : 'Driving distance'}">${row.distIsEstimate ? "~" : ""}${row.dist} km</td>
       <td class="mono" data-label="Air Temp">${row.air===null ? '<span class="dim">—</span>' : row.air+"°C"}</td>
       <td class="mono" data-label="Water Temp">${row.water===null ? '<span class="dim">—</span>' : row.water+"°C"}</td>
       <td class="mono" data-label="Wave Height">${row.wave===null ? '<span class="dim">—</span>' : row.wave+"m"}</td>
@@ -669,8 +824,46 @@ document.getElementById('sortDirBtn').addEventListener('click', ()=>{
   render();
 });
 
-// initial render with placeholders, then auto-load once
+// Populate the city and radius dropdowns
+const citySelect = document.getElementById('citySelect');
+NS_CITIES.forEach(c=>{
+  const opt = document.createElement('option');
+  opt.value = c.name;
+  opt.textContent = c.name;
+  citySelect.appendChild(opt);
+});
+citySelect.value = origin.name;
+citySelect.addEventListener('change', async ()=>{
+  origin = NS_CITIES.find(c => c.name === citySelect.value) || NS_CITIES[0];
+  computeStraightLineDistances(); // instant fallback so the UI updates immediately
+  updateSubLine();
+  render();
+  citySelect.disabled = true;
+  await computeDistances(); // refines to real driving distance via OSRM
+  render();
+  citySelect.disabled = false;
+});
+
+const radiusSelect = document.getElementById('radiusSelect');
+RADIUS_OPTIONS.forEach(km=>{
+  const opt = document.createElement('option');
+  opt.value = km;
+  opt.textContent = `${km} km`;
+  radiusSelect.appendChild(opt);
+});
+radiusSelect.value = radiusKm;
+radiusSelect.addEventListener('change', ()=>{
+  radiusKm = Number(radiusSelect.value);
+  updateSubLine();
+  render();
+});
+
+// initial distances (straight-line first for an instant page, then refined
+// with real driving distances), render with placeholders, then load conditions
+computeStraightLineDistances();
+updateSubLine();
 render();
+computeDistances().then(render);
 refreshAll();
 </script>
 </body>
